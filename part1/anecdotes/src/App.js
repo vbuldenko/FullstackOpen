@@ -2,8 +2,8 @@ import { useState } from 'react';
 
 //Button Component-----------------------------
 function Button ({text, clickHandler}) {
-    return (
-	<button onClick={clickHandler}>{text}</button>
+  return (
+	  <button onClick={clickHandler}>{text}</button>
 	)
 }
 
