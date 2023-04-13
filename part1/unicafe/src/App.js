@@ -1,26 +1,44 @@
 import {useState} from 'react';
 
-function Feedback () {
-
+function Button ({setValue, text}) {
   return (
-    <>
-      <h1>Give feedback</h1>
-      <button>good</button>
-      <button>neutral</button>
-      <button>bad</button>
-    </>
+    <button onClick={() => setValue(prev => prev + 1)}>{text}</button>
   )
 }
 
+function StatisticLine ({text, value}) {
+  return (<p>{text} {value}</p>)
+}
+
 function Statistics ({good, neutral, bad}) {
-  return (
-    <>
-      <h1>Statistics</h1>
-      <p>good {good}</p>
-      <p>neutral {neutral}</p>
-      <p>bad {bad}</p>
-    </>
-  )
+  const total = good + neutral + bad;
+  const average = (good + bad * -1)/ total;
+  const positive = `${good/total*100} %`;
+  
+  if (good || neutral || bad) {
+    return (
+        <table>
+          <thead>
+            <tr>
+              <th><h1>Statistics</h1></th>
+            </tr>
+          </thead>
+            
+          <tbody>
+            <tr>
+              <td>
+                <StatisticLine text={"good"} value={good} />
+                <StatisticLine text={"neutral"} value={neutral} />
+                <StatisticLine text={"bad"} value={bad} />
+                <StatisticLine text={"all"} value={total} />
+                <StatisticLine text={"average"} value={average} />
+                <StatisticLine text={"positive"} value={positive} />
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    )
+  } else <p>No feedback given</p>
 }
 
 
@@ -28,19 +46,14 @@ function App() {
   const [good, setGood] = useState(0);
   const [neutral, setNeutral] = useState(0);
   const [bad, setBad] = useState(0);
-  const [all, setAll] = useState(0);
 
-  const handleClick = (evaluator,  ) => {
-
-  }
   
   return (
     <div className="App">
-      {/* <Feedback /> */}
       <h1>Give feedback</h1>
-      <button onClick={() => setGood(prev => prev + 1)}>good</button>
-      <button onClick={() => setNeutral(prev => prev + 1)}>neutral</button>
-      <button onClick={() => setBad(prev => prev + 1)}>bad</button>
+      <Button setValue={setGood} text="Good" />
+      <Button setValue={setNeutral} text="Neutral" />
+      <Button setValue={setBad} text="Bad" />
       <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   );
