@@ -48,8 +48,9 @@ function App() {
 
   return (
     <>
-      <Course course={courses[0]} />
-      <Course course={courses[1]} />
+      {
+        courses.map(course => <Course course={course} />)
+      }
     </>
   );
 }
