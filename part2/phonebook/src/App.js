@@ -1,4 +1,36 @@
-import { useState } from 'react'
+import { useState } from 'react';
+
+function Search ({name, handleChange}) {
+	return (<div>Search <input value={name} onChange={handleChange} /></div>)
+}
+
+function Form ({name, handleName, number, handleNumber, handleSubmit}) {
+	return (
+		<>
+			<h2>Add a new contact</h2>
+			<form onSubmit={handleSubmit}>
+				<div>
+					name: <input value={name} onChange={handleName} />
+				</div>
+				<div>
+					number: <input value={number} onChange={handleNumber}/>
+				</div>
+				<div>
+					<button type="submit">add</button>
+				</div>
+			</form>
+		</>
+	)
+}
+
+function Contacts ({people}) {
+	return (
+		<>
+			<h2>Contacts</h2>
+			{people.map(el => <p key={el.name} >{el.name} {el.number}</p>)}
+		</>
+	)
+}
 
 const App = () => {
 	const [persons, setPersons] = useState([
@@ -43,25 +75,18 @@ const App = () => {
 	return (
 		<div>
 			<h2>Phonebook</h2>
-			<div>
-				Search <input value={searchName} onChange={handleSearch} />
-			</div>
-
-			<h2>Add a new contact</h2>
-			<form onSubmit={handleSubmit}>
-				<div>
-					name: <input value={newName} onChange={handleNameChange} />
-				</div>
-				<div>
-					number: <input value={newNumber} onChange={handleNumberChange}/>
-				</div>
-				<div>
-					<button type="submit">add</button>
-				</div>
-			</form>
-
-			<h2>Contacts</h2>
-			{people.map(el => <p key={el.name} >{el.name} {el.number}</p>)}
+			<Search 
+				name={searchName}
+				handleChange={handleSearch}
+			/>
+			<Form 
+				name={newName}
+				handleName={handleNameChange}
+				number={newNumber}
+				handleNumber={handleNumberChange}
+				handleSubmit={handleSubmit}
+			/>
+			< Contacts people={people} />
 		</div>
 	)
 }
