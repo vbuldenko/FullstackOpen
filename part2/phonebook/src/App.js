@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect} from 'react';
+import contactService from './services/contacts';
+
 
 function Search ({name, handleChange}) {
 	return (<div>Search <input value={name} onChange={handleChange} /></div>)
@@ -23,23 +25,29 @@ function Form ({name, handleName, number, handleNumber, handleSubmit}) {
 	)
 }
 
-function Contacts ({people}) {
+function Contact ({name, number, remover}) {
+	return (
+		<div>{name} {number} <button onClick={remover}>delete</button></div>
+	)
+}
+
+function Contacts ({people, remover}) {
 	return (
 		<>
 			<h2>Contacts</h2>
-			{people.map(el => <p key={el.name} >{el.name} {el.number}</p>)}
+			{people.map(el => <Contact 
+								key={el.id}
+								name={el.name}
+								number={el.number}
+								remover={() => remover(el.id, el.name)}
+								/>)
+			}
 		</>
 	)
 }
 
 const App = () => {
-	const [persons, setPersons] = useState([
-		{ name: 'Arto Hellas', number: '040-123456', id: 1 },
-		{ name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-		{ name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-		{ name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-	])
-
+	const [persons, setPersons] = useState([])
 	const [newName, setNewName] = useState('');
 	const [newNumber, setNewNumber] = useState('');
 	const [searchName, setSearchName] = useState('');
@@ -47,18 +55,46 @@ const App = () => {
 	const filteredPersons = persons.filter(person => person.name.toLowerCase().includes(searchName.toLowerCase()));
 	const people = searchName.length ? filteredPersons: persons;
 
-	function handleSubmit(event) {
-		event.preventDefault();
-
-		const hasName = persons.some(person => person.name === newName);
-		if (hasName) {
-			alert(`${newName} is already added to phonebook`)
-		} else {
-			setPersons(prev => prev.concat({name: newName, number: newNumber, id: persons.length + 1}))
-			setNewName('')
-		}
+	function resetForm () {
+		setNewName('')
+		setNewNumber('')
 	}
 
+	function handleSubmit(event) {
+		event.preventDefault();
+		const newContact = {name: newName, number: newNumber}
+		const hasName = persons.some(person => person.name === newName);
+
+		if (hasName) {
+			// alert(`${newName} is already added to phonebook`)
+			if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+				const person = persons.find(p => p.name === newName);
+				const p_id = person.id;
+				const changedPerson = {...person, number: newNumber};
+				contactService
+					.update(p_id, changedPerson)
+					.then(response => {
+						setPersons(persons.map(p => p.id !== p_id ? p: response))
+						resetForm()
+					})
+			}
+		} else {
+			contactService
+				.create(newContact)
+				.then(contact => {
+					setPersons(prev => prev.concat(contact))
+					resetForm()
+				})
+		}
+	}
+	
+	function handleRemove(id, name) {
+		if (window.confirm(`Do you really want to delete ${name}?`)) {
+			contactService.remove(id)
+			contactService.getAll().then(data => setPersons(data))
+		  }
+	}
+	
 	function handleNameChange(event) {
 		setNewName(event.target.value);
 	}
@@ -71,6 +107,10 @@ const App = () => {
 		setSearchName(event.target.value)
 	}
 
+
+	useEffect(() => {
+		contactService.getAll().then(data => setPersons(data))
+	}, [])
 
 	return (
 		<div>
@@ -86,7 +126,7 @@ const App = () => {
 				handleNumber={handleNumberChange}
 				handleSubmit={handleSubmit}
 			/>
-			< Contacts people={people} />
+			<Contacts people={people} remover={handleRemove}/>
 		</div>
 	)
 }
