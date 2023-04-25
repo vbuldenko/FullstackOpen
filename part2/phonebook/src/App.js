@@ -36,14 +36,26 @@ function Contacts ({people, remover}) {
 		<>
 			<h2>Contacts</h2>
 			{people.map(el => <Contact 
-								key={el.id}
-								name={el.name}
-								number={el.number}
-								remover={() => remover(el.id, el.name)}
-								/>)
+						key={el.id}
+						name={el.name}
+						number={el.number}
+						remover={() => remover(el.id, el.name)}
+						/>)
 			}
 		</>
 	)
+}
+
+function Notification ({ message }) {
+  if (message === null) {
+    return null
+  }
+
+  return (
+    <div className='notification'>
+      {message}
+    </div>
+  )
 }
 
 const App = () => {
@@ -51,6 +63,7 @@ const App = () => {
 	const [newName, setNewName] = useState('');
 	const [newNumber, setNewNumber] = useState('');
 	const [searchName, setSearchName] = useState('');
+	const [notification, setNotification] = useState(null);
 	
 	const filteredPersons = persons.filter(person => person.name.toLowerCase().includes(searchName.toLowerCase()));
 	const people = searchName.length ? filteredPersons: persons;
@@ -59,11 +72,19 @@ const App = () => {
 		setNewName('')
 		setNewNumber('')
 	}
+	
+	function handleNotification (message) {
+		setNotification(message)
+		setTimeout(() => {
+		  setNotification(null)
+		}, 5000)
+	}
 
 	function handleSubmit(event) {
 		event.preventDefault();
 		const newContact = {name: newName, number: newNumber}
 		const hasName = persons.some(person => person.name === newName);
+		const message = hasName ? 'a number is changed' : `${newContact.name} was added to the phonebook`;
 
 		if (hasName) {
 			// alert(`${newName} is already added to phonebook`)
@@ -76,6 +97,7 @@ const App = () => {
 					.then(response => {
 						setPersons(persons.map(p => p.id !== p_id ? p: response))
 						resetForm()
+						handleNotification(message)
 					})
 			}
 		} else {
@@ -84,6 +106,7 @@ const App = () => {
 				.then(contact => {
 					setPersons(prev => prev.concat(contact))
 					resetForm()
+					handleNotification(notification)
 				})
 		}
 	}
@@ -115,6 +138,7 @@ const App = () => {
 	return (
 		<div>
 			<h2>Phonebook</h2>
+			<Notification message={notification} />
 			<Search 
 				name={searchName}
 				handleChange={handleSearch}
