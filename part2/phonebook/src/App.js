@@ -85,6 +85,7 @@ const App = () => {
 		const newContact = {name: newName, number: newNumber}
 		const hasName = persons.some(person => person.name === newName);
 		const message = hasName ? 'a number is changed' : `${newContact.name} was added to the phonebook`;
+		const errorMessage = `Information of ${newContact.name} was already removed from the server`;
 
 		if (hasName) {
 			// alert(`${newName} is already added to phonebook`)
@@ -99,7 +100,8 @@ const App = () => {
 						resetForm()
 						handleNotification(message)
 					}).catch(error => {
-					    console.log(error)
+						console.log(error)
+						handleNotification(errorMessage)
 					  })
 			}
 		} else {
