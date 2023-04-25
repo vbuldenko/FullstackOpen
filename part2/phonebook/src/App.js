@@ -98,7 +98,9 @@ const App = () => {
 						setPersons(persons.map(p => p.id !== p_id ? p: response))
 						resetForm()
 						handleNotification(message)
-					})
+					}).catch(error => {
+					    console.log(error)
+					  })
 			}
 		} else {
 			contactService
