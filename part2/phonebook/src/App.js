@@ -106,7 +106,7 @@ const App = () => {
 				.then(contact => {
 					setPersons(prev => prev.concat(contact))
 					resetForm()
-					handleNotification(notification)
+					handleNotification(message)
 				})
 		}
 	}
