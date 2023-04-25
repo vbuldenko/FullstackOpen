@@ -46,14 +46,35 @@ function Contacts ({people, remover}) {
 	)
 }
 
-function Notification ({ message }) {
+function Notification ({message}) {
+
+  const notificationStyle1 = {
+	color: 'green',
+	background: 'lightgrey',
+	fontSize: 20,
+	borderStyle: 'solid',
+	borderRadius: 5,
+	padding: 10,
+	marginBottom: 10,
+  }
+
+  const notificationStyle2 = {
+	color: 'red',
+	background: 'lightgrey',
+	fontSize: 20,
+	borderStyle: 'solid',
+	borderRadius: 5,
+	padding: 10,
+	marginBottom: 10,
+  }
+
   if (message === null) {
     return null
   }
 
   return (
-    <div className='notification'>
-      {message}
+    <div className='notification' style={message.error? notificationStyle2: notificationStyle1}>
+      {message.text}
     </div>
   )
 }
@@ -77,15 +98,15 @@ const App = () => {
 		setNotification(message)
 		setTimeout(() => {
 		  setNotification(null)
-		}, 5000)
+		}, 1000)
 	}
 
 	function handleSubmit(event) {
 		event.preventDefault();
 		const newContact = {name: newName, number: newNumber}
 		const hasName = persons.some(person => person.name === newName);
-		const message = hasName ? 'a number is changed' : `${newContact.name} was added to the phonebook`;
-		const errorMessage = `Information of ${newContact.name} was already removed from the server`;
+		const message = hasName ? {text:'a number is changed', error: false} : {text:`${newContact.name} was added to the phonebook`, error: false};
+		const errorMessage = {text: `Information of ${newContact.name} was already removed from the server`, error: true};
 
 		if (hasName) {
 			// alert(`${newName} is already added to phonebook`)
@@ -119,6 +140,7 @@ const App = () => {
 		if (window.confirm(`Do you really want to delete ${name}?`)) {
 			contactService.remove(id)
 			contactService.getAll().then(data => setPersons(data))
+			resetForm()
 		  }
 	}
 	
