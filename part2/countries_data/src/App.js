@@ -3,35 +3,10 @@ import { useState, useEffect } from 'react';
 import axios from "axios";
 import './App.css';
 
-// A functional component that displays the weather of the selected city
-function Weather ({city, countryCode}) {
-    const apiKey = 'd4d42d94cddee3952d8f0ad931e243e5';
-    const url = `http://api.openweathermap.org/data/2.5/weather?q=${city},${countryCode}&units=metric&appid=${apiKey}`;
-    let temperature = '';
-    let wind = '';
-    axios
-        .get(url)
-        .then(({data}) => {
-            temperature = data.main.temp
-            wind = data.wind.speed
-
-            console.log(temperature)
-            console.log(wind)
-        })
-        .catch(error => console.error('Error:', error));
-
-    return (
-        <div>
-            <h1>Weather in {city}</h1>
-            <p>temperature {temperature} Celcius</p>
-            <p>wind {wind} m/s</p>
-        </div>
-    )
-}
-
 // A functional component that displays basic country data
 function Country ({country}) {
     const [fullinfo, setFullinfo] = useState(false);
+    const [weather, setWeather] = useState({temp: '', wind: ''});
 
     function languageReturner () {
         const languages = [];
@@ -43,6 +18,24 @@ function Country ({country}) {
         return languages.map(lang => <li key={lang}>{lang}</li>)
     }
 
+    useEffect(() => {
+        if (fullinfo) {
+            const apiKey = process.env.REACT_APP_API_KEY;
+            const url = `http://api.openweathermap.org/data/2.5/weather?q=${country.capital},${country.cca2}&units=metric&appid=${apiKey}`;
+            
+            axios
+                .get(url)
+                .then(({data}) => {
+                    setWeather({
+                        temp: data.main.temp,
+                        wind: data.wind.speed,
+                        img: `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`
+                    })
+                })
+                .catch(error => console.error('Error:', error))
+        }
+    }, [fullinfo, country])
+
     return ( !fullinfo ? <div>{country.name.common} <button onClick={() => setFullinfo(true)}>show</button></div>:
         <div>
             <div>
@@ -52,8 +45,11 @@ function Country ({country}) {
             <p>{`capital ${country.capital}`}</p>
             <p>{`area ${country.area}`}</p>
             <div><b>languages:</b><ul>{languageReturner()}</ul></div>
-            <img src={country.flags.png} alt='flag of the country'/>
-            <Weather city={country.capital} countryCode={country.cca2} />
+            <img className='flag' src={country.flags.png} alt='flag of the country'/>
+            <h1>Weather in {country.capital}</h1>
+            <p>temperature {weather.temp} Celcius</p>
+            <img src={weather.img} alt='weather icon' />
+            <p>wind {weather.wind} m/s</p>
         </div>
     )
 }
@@ -79,7 +75,6 @@ function Countries ({countries, input}) {
         }
         
     }
-
 }
 
 // The main component
