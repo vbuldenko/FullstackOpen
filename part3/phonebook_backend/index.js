@@ -1,18 +1,29 @@
-const contacts = require('./data')
+let contacts = require('./data')
 const express = require('express')
+const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
 
+// const requestLogger = (request, response, next) => {
+//   console.log('Method:', request.method)
+//   console.log('Path:  ', request.path)
+//   console.log('Body:  ', request.body)
+//   console.log('---')
+//   next()
+// }
+// app.use(requestLogger)
+app.use(morgan("tiny"))
 
-app.get('/api/persones', (request, response) => {
+
+app.get('/api/persons', (request, response) => {
   response.json(contacts)
 })
 
 app.get('/info', (request, response) => {
     response.send(`
-    <h1>Phonebook has info for ${contacts.length} people</h1>
-    <h1>${new Date()}<h1/>
+    <p>Phonebook has info for ${contacts.length} people</p>
+    <p>${new Date()}<p/>
     `)
 })
 
@@ -29,24 +40,26 @@ app.get('/api/persons/:id', (request, response) => {
 
 app.post ('/api/persons', (req, res) => {
     if (!req.body.name || !req.body.number) {
-        return response.status(400).json({ 
+        return res.status(400).json({ 
           error: 'name or number is missing' 
         })
     }
 
     if (contacts.find(contact => contact.name === req.body.name)) {
-        return response.status(400).json({ 
+        return res.status(400).json({ 
           error: 'name must be unique' 
         })
     }
 
 
-    const newId = Math.floor(Math.random() * 10000) + 1
+    const newId = Math.floor(Math.random() * 1000) + 1
     const person = req.body
 
     person.id = newId
+    console.log(person)
 
     contacts = contacts.concat(person)
+    console.log(contacts)
 
     res.json(person)
 })
@@ -56,7 +69,7 @@ app.delete('/api/persons/:id', (req, res) => {
     contacts = contacts.filter(p => p.id !== id)
   
     res.status(204).end()
-})
+}) 
 
 
 const PORT = 3001
