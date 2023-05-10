@@ -5,15 +5,8 @@ const app = express()
 
 app.use(express.json())
 
-// const requestLogger = (request, response, next) => {
-//   console.log('Method:', request.method)
-//   console.log('Path:  ', request.path)
-//   console.log('Body:  ', request.body)
-//   console.log('---')
-//   next()
-// }
-// app.use(requestLogger)
-app.use(morgan("tiny"))
+morgan.token('reqBody', (req, res) => JSON.stringify(req.body));
+app.use(morgan('tiny :reqBody'))
 
 
 app.get('/api/persons', (request, response) => {
@@ -56,7 +49,6 @@ app.post ('/api/persons', (req, res) => {
     const person = req.body
 
     person.id = newId
-    console.log(person)
 
     contacts = contacts.concat(person)
     console.log(contacts)
