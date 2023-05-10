@@ -13,7 +13,10 @@ app.use(express.json())
 //   next()
 // }
 // app.use(requestLogger)
-app.use(morgan("tiny"))
+morgan.token('reqBody', function (req, res) { return JSON.stringify(req.body) });
+
+
+app.use(morgan(':method :url :status :res[content-length] - :response-time ms :reqBody'))
 
 
 app.get('/api/persons', (request, response) => {
@@ -54,13 +57,9 @@ app.post ('/api/persons', (req, res) => {
 
     const newId = Math.floor(Math.random() * 1000) + 1
     const person = req.body
-
     person.id = newId
-    console.log(person)
 
     contacts = contacts.concat(person)
-    console.log(contacts)
-
     res.json(person)
 })
 
