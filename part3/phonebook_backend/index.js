@@ -5,17 +5,7 @@ const app = express()
 
 app.use(express.json())
 
-// const requestLogger = (request, response, next) => {
-//   console.log('Method:', request.method)
-//   console.log('Path:  ', request.path)
-//   console.log('Body:  ', request.body)
-//   console.log('---')
-//   next()
-// }
-// app.use(requestLogger)
 morgan.token('reqBody', function (req, res) { return JSON.stringify(req.body) });
-
-
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :reqBody'))
 
 
@@ -53,7 +43,6 @@ app.post ('/api/persons', (req, res) => {
           error: 'name must be unique' 
         })
     }
-
 
     const newId = Math.floor(Math.random() * 1000) + 1
     const person = req.body
