@@ -2,10 +2,13 @@ let contacts = require('./data')
 const express = require('express')
 const morgan = require('morgan')
 const app = express()
+// const cors = require('cors')
 
+// app.use(cors())
+app.use(express.static('build'))
 app.use(express.json())
 
-morgan.token('reqBody', function (req, res) { return JSON.stringify(req.body) });
+morgan.token('reqBody', function (req, res) { return JSON.stringify(req.body) })
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :reqBody'))
 
 
@@ -20,15 +23,24 @@ app.get('/info', (request, response) => {
     `)
 })
 
+// app.put('/api/persons/:id', (request, response) => {
+//     const id = Number(request.params.id)
+//     const person = contacts.find(person => person.id === id)
+//     if (person) {
+//         response.json(person)
+//       } else {
+//         response.status(404).end()
+//       }
+// })
+
 app.get('/api/persons/:id', (request, response) => {
-    const id = Number(request.params.id)
-    console.log(id)
-    const person = contacts.find(person => person.id === id)
-    if (person) {
-        response.json(person)
-      } else {
-        response.status(404).end()
-      }
+  const id = Number(request.params.id)
+  const person = contacts.find(person => person.id === id)
+  if (person) {
+      response.json(person)
+    } else {
+      response.status(404).end()
+    }
 })
 
 app.post ('/api/persons', (req, res) => {
