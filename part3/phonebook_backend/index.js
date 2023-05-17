@@ -1,7 +1,8 @@
-let contacts = require('./data')
-const express = require('express')
-const morgan = require('morgan')
-const app = express()
+const Contact = require('./models/contact');
+let contacts = require('./data');
+const express = require('express');
+const morgan = require('morgan');
+const app = express();
 // const cors = require('cors')
 
 // app.use(cors())
@@ -13,7 +14,11 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms :r
 
 
 app.get('/api/persons', (request, response) => {
-  response.json(contacts)
+  Contact.find({}).then(result => {
+    response.json(result)
+    mongoose.connection.close()
+  })
+  
 })
 
 app.get('/info', (request, response) => {
@@ -44,7 +49,10 @@ app.get('/api/persons/:id', (request, response) => {
 })
 
 app.post ('/api/persons', (req, res) => {
-    if (!req.body.name || !req.body.number) {
+    const name = req.body.name;
+    const number = req.body.number;
+
+    if (!name || !number) {
         return res.status(400).json({ 
           error: 'name or number is missing' 
         })
@@ -56,11 +64,18 @@ app.post ('/api/persons', (req, res) => {
         })
     }
 
-    const newId = Math.floor(Math.random() * 1000) + 1
-    const person = req.body
-    person.id = newId
+    
+    const contact = new Contact({name, number})
 
-    contacts = contacts.concat(person)
+    contact.save().then(result => {
+      console.log(`added ${name} number ${number} to the phonebook`)
+      mongoose.connection.close()
+    })
+    // const newId = Math.floor(Math.random() * 1000) + 1
+    // const person = req.body
+    // person.id = newId
+
+    // contacts = contacts.concat(person)
     res.json(person)
 })
 
