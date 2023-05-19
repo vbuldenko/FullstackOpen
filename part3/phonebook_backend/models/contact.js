@@ -24,10 +24,10 @@ const contactSchema = new mongoose.Schema({
     number: {
       type: String,
       validate: {
-      validator: function(v) {
-          return /\d{2||3}-\d{>=5}/.test(v);
+        validator: function(v) {
+          return /\d{2,3}-\d{5,}/.test(v);
         },
-        message: props => `${props.value} is not a valid phone number!`
+        message: 'Invalid phone number format. Please use XX-XXXXX or XXX-XXXXX instead.'
       },
       minLength: >= 8,
       required: true
