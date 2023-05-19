@@ -122,7 +122,8 @@ const App = () => {
 						handleNotification(message)
 					}).catch(error => {
 						console.log(error)
-						handleNotification(errorMessage)
+						// handleNotification(errorMessage)
+						handleNotification({text: error.response.data.error, error: true})
 					  })
 			}
 		} else {
