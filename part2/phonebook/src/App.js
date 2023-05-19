@@ -132,6 +132,9 @@ const App = () => {
 					setPersons(prev => prev.concat(contact))
 					resetForm()
 					handleNotification(message)
+				}).catch(error => {
+						console.log(error)
+						handleNotification({text: error.response.data.error, error: true}) //Added code Lookup later!!!!!!!!
 				})
 		}
 	}
