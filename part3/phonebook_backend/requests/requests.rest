@@ -2,6 +2,8 @@ GET http://localhost:3001/
 ###
 GET http://localhost:3001/api/persons/
 ###
+GET http://localhost:10000/api/persons/
+###
 GET https://phonebook-vb.onrender.com/api/persons/
 ###
 GET http://localhost:3001/info
@@ -10,7 +12,7 @@ GET http://localhost:3001/api/persons/2
 ###
 DELETE http://localhost:3001/api/persons/3
 ###
-POST http://localhost:3001/api/persons/
+POST http://localhost:10000/api/persons/
 content-type: application/json
 
 {

@@ -26,17 +26,18 @@ if (process.argv.length === 3) {
 
   Contact.find({}).then(result => {
     console.log("Phonebook:")
+    console.log(result)
+
     result.forEach(contact => {
-      console.log(contact.name, constact.number)
+      console.log(contact.name, contact.number)
     })
     mongoose.connection.close()
   })
-  process.exit(1)
+} else {
+  const contact = new Contact({name, number})
+
+  contact.save().then(result => {
+    console.log(`added ${name} number ${number} to the phonebook`)
+    mongoose.connection.close()
+  })
 }
-
-const contact = new Contact({name, number})
-
-contact.save().then(result => {
-  console.log(`added ${name} number ${number} to the phonebook`)
-  mongoose.connection.close()
-})
