@@ -29,7 +29,7 @@ const contactSchema = new mongoose.Schema({
         },
         message: 'Invalid phone number format. Please use XX-XXXXX or XXX-XXXXX instead.'
       },
-      minLength: >= 8,
+      minLength: 8,
       required: true
     }
 })

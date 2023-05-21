@@ -69,13 +69,14 @@ app.get('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-app.post ('/api/persons', (req, res) => {
+app.post ('/api/persons', (req, res, next) => {
 
     // if (contacts.find(contact => contact.name === req.body.name)) {
     //     return res.status(400).json({ 
     //       error: 'name must be unique' 
     //     })
     // }
+    const {name, number} = req.body
 
     const contact = new Contact({name, number})
 
