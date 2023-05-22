@@ -141,12 +141,16 @@ const App = () => {
 		}
 	}
 	
-	function handleRemove(id, name) {
-		if (window.confirm(`Do you really want to delete ${name}?`)) {
-			contactService.remove(id)
-			contactService.getAll().then(data => setPersons(data))
-			resetForm()
-		  }
+	async function handleRemove(id, name) {
+	  if (window.confirm(`Do you really want to delete ${name}?`)) {
+	    try {
+	      await contactService.remove(id);
+	      const data = await contactService.getAll();
+	      setPersons(data);
+	    } catch (error) {
+	      console.error('An error occurred:', error);
+	    }
+	  }
 	}
 	
 	function handleNameChange(event) {
