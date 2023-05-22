@@ -124,6 +124,7 @@ const App = () => {
 						console.log(error)
 						// handleNotification(errorMessage)
 						handleNotification({text: error.response.data.error, error: true})
+						setPersons(persons.filter(p => p.id !== p_id))
 					  })
 			}
 		} else {
