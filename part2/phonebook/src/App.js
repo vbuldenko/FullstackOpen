@@ -98,7 +98,7 @@ const App = () => {
 		setNotification(message)
 		setTimeout(() => {
 		  setNotification(null)
-		}, 1000)
+		}, 3000)
 	}
 
 	function handleSubmit(event) {
