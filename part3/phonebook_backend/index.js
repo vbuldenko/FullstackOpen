@@ -13,14 +13,14 @@ morgan.token('reqBody', function (req, res) { return JSON.stringify(req.body) })
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :reqBody'))
 
 
-app.get('/api/persons', (request, response) => {
+app.get('/api/persons', (request, response, next) => {
   Contact.find({}).then(result => {
     response.json(result)
   }).catch(error => next(error))
   
 })
 
-app.get('/info', (request, response) => {
+app.get('/info', (request, response, next) => {
 
   Contact.find({}).then(result => {
     response.send(`
@@ -31,7 +31,7 @@ app.get('/info', (request, response) => {
    
 })
 
-app.put('/api/persons/:id', (request, response) => {
+app.put('/api/persons/:id', (request, response, next) => {
     // const id = Number(request.params.id)
     // const person = contacts.find(person => person.id === id)
     // if (person) {
