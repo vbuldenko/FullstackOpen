@@ -83,8 +83,6 @@ app.delete('/api/persons/:id', (req, res, next) => {
 
 const errorHandler = (error, request, response, next) => {
     console.error(error.message)
-    console.log(error.name)
-
 
     if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id' })
@@ -95,7 +93,6 @@ const errorHandler = (error, request, response, next) => {
     next(error)
 }
 app.use(errorHandler)
-
 
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
