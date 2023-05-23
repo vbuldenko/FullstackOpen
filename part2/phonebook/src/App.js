@@ -86,8 +86,7 @@ const App = () => {
 	const [searchName, setSearchName] = useState('');
 	const [notification, setNotification] = useState(null);
 	
-	const filteredPersons = persons.filter(person => person.name.toLowerCase().includes(searchName.toLowerCase()));
-	const people = searchName.length ? filteredPersons: persons;
+	const people = searchName.length ? persons.filter(person => person.name.toLowerCase().includes(searchName.toLowerCase())) : persons;
 
 	function resetForm () {
 		setNewName('')
