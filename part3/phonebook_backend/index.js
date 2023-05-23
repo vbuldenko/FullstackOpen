@@ -36,7 +36,11 @@ app.put('/api/persons/:id', (request, response, next) => {
     const contact = { name, number }
     Contact.findByIdAndUpdate(request.params.id, contact, { new: true, runValidators: true, context: 'query' })
         .then(updtContact => {
-            response.json(updtContact)
+            if (updtContact) {
+                response.json(updtContact)
+            } else {
+                response.status(404).json({ error: "contact was already deleted" })
+            }
         })
         .catch(error => next(error))
 })
