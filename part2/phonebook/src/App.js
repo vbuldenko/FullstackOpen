@@ -35,13 +35,7 @@ function Contacts ({people, remover}) {
 	return (
 		<>
 			<h2>Contacts</h2>
-			{people.map(el => el && (<Contact 
-						key={el.id}
-						name={el.name}
-						number={el.number}
-						remover={() => remover(el.id, el.name)}
-						/>))
-			}
+			{people.map(el => <Contact key={el.id} name={el.name} number={el.number} remover={() => remover(el.id, el.name)} />)}
 		</>
 	)
 }
