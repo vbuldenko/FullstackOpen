@@ -35,12 +35,12 @@ function Contacts ({people, remover}) {
 	return (
 		<>
 			<h2>Contacts</h2>
-			{people.map(el => <Contact 
+			{people.map(el => el && (<Contact 
 						key={el.id}
 						name={el.name}
 						number={el.number}
 						remover={() => remover(el.id, el.name)}
-						/>)
+						/>))
 			}
 		</>
 	)
@@ -86,8 +86,7 @@ const App = () => {
 	const [searchName, setSearchName] = useState('');
 	const [notification, setNotification] = useState(null);
 	
-	const filteredPersons = persons.filter(person => person.name.toLowerCase().includes(searchName.toLowerCase()));
-	const people = searchName.length ? filteredPersons: persons;
+	const people = searchName.length ? persons.filter(person => person.name.toLowerCase().includes(searchName.toLowerCase())): persons;
 
 	function resetForm () {
 		setNewName('')
@@ -103,37 +102,35 @@ const App = () => {
 
 	function handleSubmit(event) {
 		event.preventDefault();
-		const newContact = {name: newName, number: newNumber}
 		const hasName = persons.some(person => person.name === newName);
-		const message = hasName ? {text:'a number is changed', error: false} : {text:`${newContact.name} was added to the phonebook`, error: false};
-		const errorMessage = {text: `Information of ${newContact.name} was already removed from the server`, error: true};
+		const message = hasName ? {text:'a number is changed', error: false} : {text:`${newName} was added to the phonebook`, error: false};
 
 		if (hasName) {
-			// alert(`${newName} is already added to phonebook`)
+
 			if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
 				const person = persons.find(p => p.name === newName);
-				const p_id = person.id;
 				const changedPerson = {...person, number: newNumber};
+
 				contactService
-					.update(p_id, changedPerson)
+					.update(person.id, changedPerson)
 					.then(response => {
-						setPersons(persons.map(p => p.id !== p_id ? p: response))
-						resetForm()
+						setPersons(persons.map(p => p.id !== person.id ? p: response))
 						handleNotification(message)
-					}).catch(error => {
+						resetForm()
+					})
+					.catch(error => {
 						console.log(error)
-						// handleNotification(errorMessage)
 						handleNotification({text: error.response.data.error, error: true})
-						setPersons(persons.filter(p => p.id !== p_id))
-					  })
+						setPersons(persons.filter(p => p.id !== person.id))
+					})
 			}
 		} else {
 			contactService
-				.create(newContact)
+				.create({name: newName, number: newNumber})
 				.then(contact => {
 					setPersons(prev => prev.concat(contact))
-					resetForm()
 					handleNotification(message)
+					resetForm()
 				}).catch(error => {
 						console.log(error)
 						handleNotification({text: error.response.data.error, error: true}) //Added code Lookup later!!!!!!!!
