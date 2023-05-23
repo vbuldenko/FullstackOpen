@@ -36,9 +36,15 @@ app.put('/api/persons/:id', (request, response, next) => {
     const contact = { name, number }
     Contact.findByIdAndUpdate(request.params.id, contact, { new: true, runValidators: true, context: 'query' })
         .then(updtContact => {
-            response.json(updtContact)
+            if (updtContact) {
+                response.json(updtContact)
+            } else {
+                response.status(404).json({ error: "contact was already deleted" })
+            }
         })
-        .catch(error => next(error))
+        .catch(error => {
+            next(error)
+        })
 })
 
 app.get('/api/persons/:id', (request, response, next) => {
@@ -48,7 +54,7 @@ app.get('/api/persons/:id', (request, response, next) => {
             if (contact) {
                 response.json(contact)
             } else {
-                response.status(400).end()
+                response.status(404).end()
             }
         })
         .catch(error => next(error))
@@ -77,6 +83,8 @@ app.delete('/api/persons/:id', (req, res, next) => {
 
 const errorHandler = (error, request, response, next) => {
     console.error(error.message)
+    console.log(error.name)
+
 
     if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id' })
