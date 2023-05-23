@@ -1,1 +1,1 @@
-# Frontend part of the phonebook by means of CRA
+# Frontend part of the phonebook made by means of CRA
