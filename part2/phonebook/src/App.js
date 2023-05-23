@@ -125,8 +125,7 @@ const App = () => {
 						handleNotification({text: error.response.data.error, error: true})
 						setPersons(persons.filter(p => p.id !== p_id))
 					  })
-			}
-		} else {
+			} else {
 			contactService
 				.create(newContact)
 				.then(contact => {
