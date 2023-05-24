@@ -1,0 +1,17 @@
+GET http://localhost:3001/
+###
+GET http://localhost:3001/api/blogs/
+###
+GET http://localhost:3001/api/blogs/2
+###
+DELETE http://localhost:3001/api/blogs/3
+###
+POST http://localhost:3001/api/blogs/
+content-type: application/json
+
+{
+    "title": "Awesome text",
+    "author": "Some James",
+    "url": "https://wwww.google.com",
+    "likes": 0
+}
