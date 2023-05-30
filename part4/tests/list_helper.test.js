@@ -8,6 +8,7 @@ test('dummy returns one', () => {
   expect(result).toBe(1)
 })
 
+
 // Tests for totalLikes function
 describe('total likes', () => {
   
@@ -53,5 +54,82 @@ describe('total likes', () => {
     ];
 
     expect(listHelper.totalLikes(blogs)).toBe(15)
+  })
+})
+
+
+// Tests for favoriteBlog
+describe('favorite blog', () => {
+  
+  test('of empty list is null', () => {
+    const blogs = [];
+
+    expect(listHelper.favoriteBlog(blogs)).toBe(null)
+  })
+
+  test('when list has only one blog equals to that blog', () => {
+    const blogs = [
+      {
+        title: 'Go To Statement Considered Harmful',
+        author: 'Edsger W. Dijkstra',
+        likes: 5,
+      }
+    ];
+
+    expect(listHelper.favoriteBlog(blogs)).toEqual(blogs[0])
+  })
+
+  test('of a bigger list is calculated right', () => {
+    const blogs = [
+      {
+        title: 'Some Text',
+        author: 'Edsger W. D.',
+        likes: 5,
+      },
+      {
+        title: 'Something',
+        author: 'Edsger W.W.',
+        likes: 10,
+      }
+    ];
+
+    expect(listHelper.favoriteBlog(blogs)).toEqual(blogs[1])
+  })
+})
+
+
+// Tests for mostBlogs
+describe('largest amount of blogs', () => {
+  
+  test('of empty list is null', () => {
+    const blogs = [];
+
+    expect(listHelper.favoriteBlog(blogs)).toBe(null)
+  })
+
+  test('when list has only one blog equals to that blog', () => {
+    const blogs = [
+      {
+        author: 'Edsger W. Dijkstra',
+        blogs: 5,
+      }
+    ];
+
+    expect(listHelper.favoriteBlog(blogs)).toEqual(blogs[0])
+  })
+
+  test('of a bigger list is calculated right', () => {
+    const blogs = [
+      {
+        author: 'Edsger W. D.',
+        blogs: 5,
+      },
+      {
+        author: 'Edsger W.W.',
+        blogs: 10,
+      }
+    ];
+
+    expect(listHelper.favoriteBlog(blogs)).toEqual(blogs[1])
   })
 })

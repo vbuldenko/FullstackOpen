@@ -11,13 +11,24 @@ const totalLikes = (blogs) => {
   return totalLikes;
 }
 
-const favoriteBlog = (blogs) {
+const favoriteBlog = (blogs) => {
+  if (blogs.length === 0) {
+    return null
+  }
 
-  const favoriteBlogIndex = blogs.reduce((acc, currentBlog, currentBlogIndex) => currentBlog.likes > acc ? currentBlog.likes : acc )
+  const favoriteBlog = blogs.reduce((prevBlog, currentBlog) => currentBlog.likes > prevBlog.likes ? currentBlog : prevBlog);
 
-  return blogs[favoriteBlogIndex]
+  return favoriteBlog
 
 }
+
+const mostBlogs = (blogs) => {
+  if (blogs.length === 0) {
+    return null
+  }
+  return blogs.reduce((prevBlog, currentBlog) => currentBlog.blogs > prevBlog.blogs ? currentBlog: prevBlog).author
+}
+
   
 module.exports = {
   dummy,
