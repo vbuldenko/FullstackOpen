@@ -5,6 +5,8 @@ GET http://localhost:3001/api/persons/
 ###
 GET https://phonebook-vb.onrender.com/api/persons/
 ###
+DELETE https://phonebook-vb.onrender.com/api/persons/646ceb9450b8e2d5e1631c3b
+###
 GET http://localhost:3001/info
 ###
 GET http://localhost:3001/api/persons/2
