@@ -13,5 +13,5 @@ content-type: application/json
     "title": "Awesome text",
     "author": "Some James",
     "url": "https://wwww.google.com",
-    "likes": 0
+    "likes": 5
 }
