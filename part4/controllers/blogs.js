@@ -1,10 +1,9 @@
 const blogRouter = require('express').Router()
 const Blog = require('../models/blog')
 
-blogRouter.get('/', (request, response) => {
-    Blog.find({}).then(blogs => {
-        response.json(blogs)
-    })
+blogRouter.get('/', async (request, response) => {
+    const blogs = await Blog.find({})
+    response.json(blogs)
 })
 
 blogRouter.get('/:id', (request, response, next) => {
@@ -19,15 +18,21 @@ blogRouter.get('/:id', (request, response, next) => {
         .catch(error => next(error))
 })
 
-blogRouter.post('/', (request, response, next) => {
+blogRouter.post('/', async (request, response, next) => {
+    //Adding likes property equeling to zero if it was not declared in the first place
+    const { body } = request
+    if (!body.likes) {
+        body.likes = 0
+    }
 
-    const blog = new Blog(request.body)
+    const blog = new Blog(body)
 
-    blog.save()
-        .then(savedItem => {
-            response.json(savedItem)
-        })
-        .catch(error => next(error))
+    try {
+        const savedItem = await blog.save()
+        response.status(201).json(savedItem)
+    } catch(error) {
+        next(error)
+    }
 })
 
 blogRouter.delete('/:id', (request, response, next) => {
