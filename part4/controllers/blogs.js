@@ -26,8 +26,9 @@ blogRouter.post('/', async (request, response, next) => {
     const { body } = request
     //responds with status 400 if there no title or url properties in the request
     if (!body.title || !body.url) {
-        response.status(400)
+        return response.status(400).json({ error: 'Title or URL is missing' })
     }
+
     //Adding likes property equeling to zero if it was not declared in the first place
     if (!body.likes) {
         body.likes = 0
@@ -41,6 +42,7 @@ blogRouter.post('/', async (request, response, next) => {
     } catch(error) {
         next(error)
     }
+
 })
 
 blogRouter.delete('/:id', (request, response, next) => {
