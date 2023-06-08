@@ -23,8 +23,12 @@ blogRouter.get('/:id', (request, response, next) => {
 })
 
 blogRouter.post('/', async (request, response, next) => {
-    //Adding likes property equeling to zero if it was not declared in the first place
     const { body } = request
+    //responds with status 400 if there no title or url properties in the request
+    if (!body.title || !body.url) {
+        response.status(400)
+    }
+    //Adding likes property equeling to zero if it was not declared in the first place
     if (!body.likes) {
         body.likes = 0
     }
