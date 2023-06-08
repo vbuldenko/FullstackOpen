@@ -84,6 +84,22 @@ test('if likes are missing in the POST request it defaults to 0', async () => {
     expect(likes).toContain('0')
 })
 
+test('if the title or url is missing from the request data, the backend responds with the status code 400', async () => {
+    const newBlogPost = {
+        author: "Mike Mouse M",
+        url: "https://wwww.google.com"
+    }
+
+    await api
+        .post('/api/blogs')
+        .send(newBlogPost)
+        .expect(400)
+        .expect('Content-Type', /application\/json/)
+
+    const response = await api.get('/api/blogs')
+    expect(response.body).toHaveLength(initialPosts.length)
+})
+
 afterAll(async () => {
     await mongoose.connection.close()
 })
