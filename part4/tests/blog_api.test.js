@@ -28,16 +28,11 @@ beforeEach(async () => {
     await blogObject.save()
 })
 
-test('blogs are returned in json format', async () => {
-    await api
-        .get('/api/blogs')
+test('the app returns correct amount of blogs in json format', async () => {
+    const response = await api.get('/api/blogs')
         .expect(200)
         .expect('Content-Type', /application\/json/)
-})
-
-test('all blogs are returned', async () => {
-    const response = await api.get('/api/blogs')
-
+    
     expect(response.body).toHaveLength(initialPosts.length)
 })
 
@@ -62,7 +57,6 @@ test('the POST request creates a new blog post', async () => {
         .expect('Content-Type', /application\/json/)
 
     const response = await api.get('/api/blogs')
-
     const titles = response.body.map(p => p.title)
 
     expect(response.body).toHaveLength(initialPosts.length + 1)
