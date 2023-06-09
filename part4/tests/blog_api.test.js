@@ -92,6 +92,42 @@ describe('POST requests', () => {
     })
 })
 
+describe('DELETE request', () => {
+    test('completes with a status code 204, shorter list, and missing title ', async () => {
+        const res_at_start = await api.get('/api/blogs')
+        const blogToDelete = res_at_start.body[0]
+        
+        await api
+            .delete(`/api/blogs/${blogToDelete.id}`)
+            .expect(204)
+        
+        const res_at_end = await api.get('/api/blogs')
+        expect(res_at_end.body).toHaveLength(helper.initialPosts.length - 1)
+        
+        const titles = res_at_end.body.map(b => b.title)
+        expect(titles).not.toContain(blogToDelete.title)
+    })
+})
+
+describe('PUT request', () => {
+    test('completes with changed likes property ', async () => {
+        const res_at_start = await api.get('/api/blogs')
+        const blogToChange = res_at_start.body[0]
+        blogToChange.likes = 17
+        
+        await api
+            .put(`/api/blogs/${blogToChange.id}`)
+            .send(blogToChange)
+        
+        const res_at_end = await api.get('/api/blogs')
+        expect(res_at_end.body).toHaveLength(helper.initialPosts.length)
+        
+        const likes = res_at_end.body.map(b => b.likes)
+        expect(likes).toContain('17')
+    })
+})
+
+
 
 afterAll(async () => {
     await mongoose.connection.close()
