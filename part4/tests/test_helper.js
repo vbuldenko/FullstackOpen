@@ -16,16 +16,16 @@ const initialPosts = [
 ]
 
 const nonExistingId = async () => {
-    const blog = new Blog({ title: 'willremovethissoon' })
+    const blog = new Blog({ likes: 'willremovethissoon' })
     await blog.save()
     await blog.deleteOne()
 
     return blog._id.toString()
 }
 
-const blodsInDb = async () => {
-  const blogs = await Blog.find({})
-  return blogs.map(blog => blog.toJSON())
+const blogsInDb = async () => {
+    const blogs = await Blog.find({})
+    return blogs.map(blog => blog.toJSON())
 }
 
 module.exports = {

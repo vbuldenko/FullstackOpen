@@ -30,34 +30,34 @@ describe('GET requests', () => {
 
         expect(response.body[0].id).toBeDefined()
     })
-    
+
     test('succeeds with a valid id', async () => {
-    const blogsAtStart = await helper.blogsInDb()
+        const blogsAtStart = await helper.blogsInDb()
 
-    const blogToView = blogsAtStart[0]
+        const blogToView = blogsAtStart[0]
 
-    const resultBlog = await api
-      .get(`/api/blogs/${blogToView.id}`)
-      .expect(200)
-      .expect('Content-Type', /application\/json/)
+        const resultBlog = await api
+            .get(`/api/blogs/${blogToView.id}`)
+            .expect(200)
+            .expect('Content-Type', /application\/json/)
 
-    expect(resultBlog.body).toEqual(blogToView)
+        expect(resultBlog.body).toEqual(blogToView)
     })
 
     test('fails with statuscode 404 if blog does not exist', async () => {
         const validNonexistingId = await helper.nonExistingId()
 
         await api
-          .get(`/api/blogs/${validNonexistingId}`)
-          .expect(404)
+            .get(`/api/blogs/${validNonexistingId}`)
+            .expect(404)
     })
 
     test('fails with statuscode 400 if id is invalid', async () => {
         const invalidId = '5a3d5da59070081a82a3445'
 
         await api
-          .get(`/api/blogs/${invalidId}`)
-          .expect(400)
+            .get(`/api/blogs/${invalidId}`)
+            .expect(400)
     })
 })
 
@@ -125,14 +125,14 @@ describe('DELETE request', () => {
     test('completes with a status code 204, shorter list, and missing title ', async () => {
         const res_at_start = await api.get('/api/blogs')
         const blogToDelete = res_at_start.body[0]
-        
+
         await api
             .delete(`/api/blogs/${blogToDelete.id}`)
             .expect(204)
-        
+
         const res_at_end = await api.get('/api/blogs')
         expect(res_at_end.body).toHaveLength(helper.initialPosts.length - 1)
-        
+
         const titles = res_at_end.body.map(b => b.title)
         expect(titles).not.toContain(blogToDelete.title)
     })
@@ -142,15 +142,18 @@ describe('PUT request', () => {
     test('completes with changed likes property ', async () => {
         const res_at_start = await api.get('/api/blogs')
         const blogToChange = res_at_start.body[0]
-        blogToChange.likes = 17
-        
+
+        blogToChange.likes = '17'
+        console.log(blogToChange)
+
         await api
             .put(`/api/blogs/${blogToChange.id}`)
             .send(blogToChange)
-        
+
         const res_at_end = await api.get('/api/blogs')
+        console.log(res_at_end.body)
         expect(res_at_end.body).toHaveLength(helper.initialPosts.length)
-        
+
         const likes = res_at_end.body.map(b => b.likes)
         expect(likes).toContain('17')
     })
