@@ -1,7 +1,7 @@
-const blogRouter = require('express').Router()
+const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
 
-blogRouter.get('/', async (request, response, next) => {
+blogsRouter.get('/', async (request, response, next) => {
     try {
         const blogs = await Blog.find({})
         response.json(blogs)
@@ -10,7 +10,7 @@ blogRouter.get('/', async (request, response, next) => {
     }
 })
 
-blogRouter.get('/:id', async (request, response, next) => {
+blogsRouter.get('/:id', async (request, response, next) => {
     try {
         const item = await Blog.findById(request.params.id)
         if (item) {
@@ -23,7 +23,7 @@ blogRouter.get('/:id', async (request, response, next) => {
     }
 })
 
-blogRouter.post('/', async (request, response, next) => {
+blogsRouter.post('/', async (request, response, next) => {
     const { body } = request
     //responds with status 400 if there no title or url properties in the request
     if (!body.title || !body.url) {
@@ -46,7 +46,7 @@ blogRouter.post('/', async (request, response, next) => {
 
 })
 
-blogRouter.delete('/:id', async (request, response, next) => {
+blogsRouter.delete('/:id', async (request, response, next) => {
     try {
         await Blog.findByIdAndRemove(request.params.id)
         response.status(204).end()
@@ -55,7 +55,7 @@ blogRouter.delete('/:id', async (request, response, next) => {
     }
 })
 
-blogRouter.put('/:id', async (request, response, next) => {
+blogsRouter.put('/:id', async (request, response, next) => {
     const newBlog = request.body
 
     try {
@@ -66,4 +66,4 @@ blogRouter.put('/:id', async (request, response, next) => {
     }
 })
 
-module.exports = blogRouter
+module.exports = blogsRouter
