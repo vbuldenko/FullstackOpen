@@ -2,6 +2,8 @@ GET http://localhost:3001/
 ###
 GET http://localhost:3001/api/blogs/
 ###
+GET http://localhost:3001/api/users/
+###
 GET http://localhost:3001/api/blogs/2
 ###
 DELETE http://localhost:3001/api/blogs/3
@@ -14,4 +16,13 @@ content-type: application/json
     "author": "Some James",
     "url": "https://wwww.google.com",
     "likes": 5
+}
+###
+POST http://localhost:3001/api/users/
+content-type: application/json
+
+{
+    "username": "mlukkkkk",
+    "name": "Matti Luukkainepn",
+    "password": "salainenf"
 }
