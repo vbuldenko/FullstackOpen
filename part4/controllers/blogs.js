@@ -1,5 +1,6 @@
-const blogsRouter = require('express').Router()
-const Blog = require('../models/blog')
+const blogsRouter = require('express').Router();
+const Blog = require('../models/blog');
+const User = require('../models/user');
 
 blogsRouter.get('/', async (request, response, next) => {
     try {
@@ -25,6 +26,7 @@ blogsRouter.get('/:id', async (request, response, next) => {
 
 blogsRouter.post('/', async (request, response, next) => {
     const { body } = request
+    const user = await User.findById(body.userId)
     //responds with status 400 if there no title or url properties in the request
     if (!body.title || !body.url) {
         return response.status(400).json({ error: 'Title or URL is missing' })
@@ -35,10 +37,12 @@ blogsRouter.post('/', async (request, response, next) => {
         body.likes = 0
     }
 
-    const blog = new Blog(body)
+    const blog = new Blog({...body, user: user.id})
 
     try {
         const savedItem = await blog.save()
+        user.blogs = user.blogs.concat(savedItem._id)
+        await user.save()
         response.status(201).json(savedItem)
     } catch(error) {
         next(error)
