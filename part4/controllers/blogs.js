@@ -26,7 +26,7 @@ blogsRouter.get('/:id', async (request, response, next) => {
 
 blogsRouter.post('/', async (request, response, next) => {
     const { body } = request
-    const user = await User.findById(body.userId)
+    const user = await User.findById(body.user)
     //responds with status 400 if there no title or url properties in the request
     if (!body.title || !body.url) {
         return response.status(400).json({ error: 'Title or URL is missing' })
