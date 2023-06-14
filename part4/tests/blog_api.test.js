@@ -63,6 +63,30 @@ describe('GET requests', () => {
 
 
 describe('POST requests', () => {
+    test('the POST request creates a new blog post with user as its creator', async () => {
+        const users = await helper.usersInDb()
+        
+        const newBlogPost = {
+            title: "Any text",
+            author: "Mikey Mouse",
+            url: "https://wwww.google.com",
+            likes: 3
+            user: users[0].id
+        }
+
+        await api
+            .post('/api/blogs')
+            .send(newBlogPost)
+            .expect(201)
+            .expect('Content-Type', /application\/json/)
+
+        const response = await api.get('/api/blogs')
+        const titles = response.body.map(p => p.title)
+
+        expect(response.body).toHaveLength(helper.initialPosts.length + 1)
+        expect(titles).toContain('Any text')
+    })
+    
     test('the POST request creates a new blog post', async () => {
         const newBlogPost = {
             title: "Third awesome text",
