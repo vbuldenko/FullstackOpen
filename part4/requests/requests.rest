@@ -6,16 +6,18 @@ GET http://localhost:3001/api/users/
 ###
 GET http://localhost:3001/api/blogs/2
 ###
-DELETE http://localhost:3001/api/blogs/3
+DELETE http://localhost:3001/api/blogs/648b6a540e6e517fc6bddf50
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdWtra2trIiwiaWQiOiI2NDg4YTcwOGYxMzZhMTc5YWFhMThkMTUiLCJpYXQiOjE2ODY4NDk1MzZ9.lPQH1OOIlo82YuEafnK12M8-L2aIyckP-A1BPhxH7is
 ###
 POST http://localhost:3001/api/blogs/
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdWtra2trIiwiaWQiOiI2NDg4YTcwOGYxMzZhMTc5YWFhMThkMTUiLCJpYXQiOjE2ODY4NDk1MzZ9.lPQH1OOIlo82YuEafnK12M8-L2aIyckP-A1BPhxH7is
 
 {
     "title": "Awesome text",
     "author": "Some James",
     "url": "https://wwww.google.com",
-    "likes": 5
+    "likes": 90
 }
 ###
 POST http://localhost:3001/api/users/
@@ -24,5 +26,13 @@ content-type: application/json
 {
     "username": "mlukkkkk",
     "name": "Matti Luukkainepn",
+    "password": "salainenf"
+}
+###
+POST http://localhost:3001/api/login/
+content-type: application/json
+
+{
+    "username": "mlukkkkk",
     "password": "salainenf"
 }

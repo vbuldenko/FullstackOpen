@@ -1,6 +1,8 @@
 const blogsRouter = require('express').Router();
 const Blog = require('../models/blog');
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+
 
 blogsRouter.get('/', async (request, response, next) => {
     try {
@@ -26,24 +28,26 @@ blogsRouter.get('/:id', async (request, response, next) => {
 
 blogsRouter.post('/', async (request, response, next) => {
     const { body } = request
-    // const user = await User.findById(body.user)
-    const users = await User.find({})
-    console.log(users)
-    const user = users[0]
-
-    //responds with status 400 if there no title or url properties in the request
-    if (!body.title || !body.url) {
-        return response.status(400).json({ error: 'Title or URL is missing' })
-    }
-
-    //Adding likes property equeling to zero if it was not declared in the first place
-    if (!body.likes) {
-        body.likes = 0
-    }
-
-    const blog = new Blog({ ...body, user: user.id })
 
     try {
+        const decodedToken = jwt.verify(request.token, process.env.SECRET)
+        if (!decodedToken.id) {
+            return response.status(401).json({ error: 'token invalid' })
+        }
+
+        const user = await User.findById(decodedToken.id)
+
+        //responds with status 400 if there no title or url properties in the request
+        if (!body.title || !body.url) {
+            return response.status(400).json({ error: 'Title or URL is missing' })
+        }
+
+        //Adding likes property equeling to zero if it was not declared in the first place
+        if (!body.likes) {
+            body.likes = 0
+        }
+
+        const blog = new Blog({ ...body, user: user.id })
         const savedItem = await blog.save()
         user.blogs = user.blogs.concat(savedItem._id)
         await user.save()
@@ -51,11 +55,25 @@ blogsRouter.post('/', async (request, response, next) => {
     } catch(error) {
         next(error)
     }
-
 })
 
 blogsRouter.delete('/:id', async (request, response, next) => {
     try {
+        const decodedToken = jwt.verify(request.token, process.env.SECRET)
+        const blog = await Blog.findById(request.params.id)
+
+        if (!decodedToken.id) {
+            return response.status(401).json({ error: 'Invalid or missing token' })
+        }
+
+        if (!blog) {
+            return response.status(404).json({ error: 'Blog not found' });
+        }
+
+        if ( blog.user.toString() !== decodedToken.id ) {
+            return response.status(403).json({ error: 'User is not authorized to delete this blog' })
+        }
+
         await Blog.findByIdAndRemove(request.params.id)
         response.status(204).end()
     } catch (error) {
