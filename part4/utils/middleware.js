@@ -15,14 +15,14 @@ const unknownEndpoint = (request, response) => {
 }
 
 const errorHandler = (error, request, response, next) => {
-    logger.error(error.message)
+    // logger.error(error.message)
 
     if (error.name === 'CastError') {
         return response.status(400).send({ error: 'malformatted id' })
     } else if (error.name === 'ValidationError') {
         return response.status(400).json({ error: error.message })
     } else if (error.name ===  'JsonWebTokenError') {
-        return response.status(400).json({ error: error.message })
+        return response.status(401).json({ error: error.message })
     }
 
     next(error)
@@ -38,17 +38,23 @@ const tokenExtractor = (request, response, next) => {
     next()
 }
 
-const userExtractor = (request, response, next) => {
+const userExtractor = async (request, response, next) => {
     // code that extracts the user
-    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    try {
+        const decodedToken = jwt.verify(request.token, process.env.SECRET)
+        const user = await User.findById(decodedToken.id)
 
-    if (!decodedToken.id) {
-        return response.status(401).json({ error: 'Invalid or missing token' })
+        if (!user) {
+            return response.status(401).json({ error: 'Invalid user' });
+        }
+
+        request.user = user
+
+        next()
+
+    } catch (error) {
+        next(error)
     }
-    const user = await User.findById(decodedToken.id)
-    request.user = user
-
-    next()
 }
 
 module.exports = {

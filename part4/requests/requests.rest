@@ -6,7 +6,7 @@ GET http://localhost:3001/api/users/
 ###
 GET http://localhost:3001/api/blogs/2
 ###
-DELETE http://localhost:3001/api/blogs/648b6a540e6e517fc6bddf50
+DELETE http://localhost:3001/api/blogs/648c9197c72ccc506b7e8230
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdWtra2trIiwiaWQiOiI2NDg4YTcwOGYxMzZhMTc5YWFhMThkMTUiLCJpYXQiOjE2ODY4NDk1MzZ9.lPQH1OOIlo82YuEafnK12M8-L2aIyckP-A1BPhxH7is
 ###
 POST http://localhost:3001/api/blogs/
@@ -35,4 +35,16 @@ content-type: application/json
 {
     "username": "mlukkkkk",
     "password": "salainenf"
+}
+
+###
+PUT http://localhost:3001/api/blogs/648c9edd1749e10940f89e39
+content-type: application/json
+
+{
+    "title": "Awesome text jjj",
+    "author": "Some James",
+    "url": "https://wwww.google.com",
+    "likes": "45",
+    "user": "6488a708f136a179aaa18d15"
 }
