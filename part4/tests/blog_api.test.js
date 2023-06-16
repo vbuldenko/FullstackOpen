@@ -88,6 +88,10 @@ describe('POST requests', () => {
     // })
 
     test('the POST request creates a new blog post', async () => {
+        const [ user ] = await helper.usersInDb()
+        
+        const { token } = await api.post('/api/login').send(user)
+        
         const newBlogPost = {
             title: "Third awesome text",
             author: "Mike Mouse",
@@ -98,6 +102,7 @@ describe('POST requests', () => {
         await api
             .post('/api/blogs')
             .send(newBlogPost)
+            .set({ Authorization: token })
             .expect(201)
             .expect('Content-Type', /application\/json/)
 
