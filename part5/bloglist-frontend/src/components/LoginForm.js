@@ -3,7 +3,7 @@ import './LoginForm.css';
 import loginService from '../services/login';
 import blogService from '../services/blogs';
 
-const LoginForm = ({setUser, setError}) => {
+const LoginForm = ({setUser, setMessage}) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -24,9 +24,9 @@ const LoginForm = ({setUser, setError}) => {
             setUsername('')
             setPassword('')
         } catch (exception) {
-            setError('Wrong credentials')
+            setMessage({ text: 'Wrong credentials', error: true })
             setTimeout(() => {
-                setError(null)
+                setMessage(null)
             }, 5000)
         }
     }
