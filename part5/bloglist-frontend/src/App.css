@@ -3,15 +3,15 @@
 }
 
 .notification {
-  color: 'green',
-	background: 'lightgrey',
-	fontSize: 20,
-	borderStyle: 'solid',
-	borderRadius: 5,
-	padding: 10,
-	marginBottom: 10
+  	color: green;
+	background: 'lightgrey';
+	font-size: 20px;
+	border: solid;
+	border-radius: 5px;
+	padding: 10px;
+	margin-bottom: 10px
 }
 
 .notification.error {
-  color: 'red'
+  color: red;
 }

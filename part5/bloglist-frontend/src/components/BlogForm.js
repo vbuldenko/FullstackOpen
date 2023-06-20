@@ -14,7 +14,7 @@ const BlogForm = ({ setBlogs, setMessage }) => {
                 setBlogs( prev => prev.concat(returnedBlog))
                 setNewBlog(initBlogForm)
                 setMessage({ text: `a new blog titled ${returnedBlog.title} by ${returnedBlog.author} was added!`, error: false })
-            }).cath(error => setMessage({ text: error.response.data.error, error: true }))
+            }).catch(error => setMessage({ text: error.response.data.error, error: true }))
     }
 
     const handleChange = (event) => {

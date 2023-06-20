@@ -6,7 +6,7 @@ const Notification = ({ message, setMessage }) => {
     setTimeout(() => { setMessage(null) }, 5000)
   
     return (
-      <div className={ `notification ${message.error? 'error': ''}`>
+      <div className={ `notification ${message.error? 'error': ''}`}>
         {message.text}
       </div>
     )
