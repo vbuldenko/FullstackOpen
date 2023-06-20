@@ -7,7 +7,7 @@ import blogService from './services/blogs';
 
 function App() {
     const [blogs, setBlogs] = useState([]);
-    const [errorMessage, setErrorMessage] = useState(null);
+    const [message, setMessage] = useState(null);
     const [user, setUser] = useState(null);
 
     useEffect(() => {
@@ -27,11 +27,11 @@ function App() {
 
     return (
         <div className="App">
-            <Notification message={errorMessage} />
+            <Notification message={message} />
 
             {user === null ? 
-                <LoginForm setUser={setUser} setError={setErrorMessage} />:
-                <Blogs user={user} blogs={blogs} setBlogs={setBlogs} setUser={setUser} />
+                <LoginForm setUser={setUser} setMessage={setMessage} />:
+                <Blogs user={user} blogs={blogs} setBlogs={setBlogs} setUser={setUser} setMessage={setMessage} />
             }
             
         </div>
