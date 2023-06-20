@@ -27,7 +27,7 @@ function App() {
 
     return (
         <div className="App">
-            <Notification message={message} />
+            <Notification message={message} setMessage={setMessage} />
 
             {user === null ? 
                 <LoginForm setUser={setUser} setMessage={setMessage} />:
