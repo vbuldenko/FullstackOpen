@@ -31,7 +31,13 @@ function App() {
 
             {user === null ? 
                 <LoginForm setUser={setUser} setMessage={setMessage} />:
-                <Blogs user={user} blogs={blogs} setBlogs={setBlogs} setUser={setUser} setMessage={setMessage} />
+                <Blogs 
+                    user={user}
+                    blogs={blogs}
+                    setBlogs={setBlogs}
+                    setUser={setUser}
+                    setMessage={setMessage}
+                />
             }
             
         </div>

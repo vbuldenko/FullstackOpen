@@ -1,7 +1,7 @@
 import { useState } from "react";
 import blogService from "../services/blogs";
 
-const BlogForm = ({ setBlogs, setMessage }) => {
+const BlogForm = ({ setBlogs, setMessage, setVisible }) => {
     const initBlogForm = { title: '', author: '', url: '' };
     const [newBlog, setNewBlog] = useState(initBlogForm);
 
@@ -14,6 +14,7 @@ const BlogForm = ({ setBlogs, setMessage }) => {
                 setBlogs( prev => prev.concat(returnedBlog))
                 setNewBlog(initBlogForm)
                 setMessage({ text: `a new blog titled ${returnedBlog.title} by ${returnedBlog.author} was added!`, error: false })
+                setVisible(false)
             }).catch(error => setMessage({ text: error.response.data.error, error: true }))
     }
 
