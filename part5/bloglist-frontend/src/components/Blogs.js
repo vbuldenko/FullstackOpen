@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import Blog from './Blog';
 import BlogForm from './BlogForm';
 import Togglable from './Togglable';
 
 const Blogs = ({user, blogs, setBlogs, setUser, setMessage }) => {
+    const [visible, setVisible] = useState(false);
 
     const handleLogout = () => {
         window.localStorage.removeItem('loggedBlogAppUser')
@@ -13,15 +15,19 @@ const Blogs = ({user, blogs, setBlogs, setUser, setMessage }) => {
         <div>
             <h2>Blogs</h2>
             <p>{user.username} logged in <button onClick={handleLogout}>logout</button></p>
-            <Togglable buttonLabel={ {open: 'create new blog', close: 'cancel'} } >
-                <BlogForm setBlogs={setBlogs} setMessage={setMessage} /> 
+            <Togglable
+                visible={visible}
+                setVisible={setVisible}
+                buttonLabel={ visible? 'cancel': 'create new blog' }
+            >
+                <BlogForm
+                    setBlogs={setBlogs}
+                    setMessage={setMessage}
+                    setVisible={setVisible}
+                /> 
             </Togglable>
     
-            { blogs.map( blog => <Togglable buttonLabel={ {open: 'view', close: 'hide'} } >
-                                    <Blog key={blog.id} blog={blog} />
-                                </Togglable> 
-                )
-            }
+            { blogs.map( blog => <Blog key={blog.id} blog={blog} />) }
         </div>
     ) 
 }

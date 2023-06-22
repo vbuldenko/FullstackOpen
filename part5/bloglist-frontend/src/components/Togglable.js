@@ -1,19 +1,17 @@
-import { useState } from "react";
 
 
-const Togglable = ({ children, buttonLabel}) => {
-    const [visible, setVisible] = useState(false)
+const Togglable = ({ visible, setVisible, children, buttonLabel}) => {
 
     const toggleVisibility = () => {
         setVisible(!visible)
     }
 
     return (
-        <div>
+        <div className="toggler">
             <div style={{ display: visible ? '' : 'none' }} >
                 {children}
             </div>
-            <button onClick={toggleVisibility}>{ visible? buttonLabel.close: buttonLabel.open }</button>
+            <button onClick={toggleVisibility}>{ buttonLabel }</button>
         </div>
     )
 }

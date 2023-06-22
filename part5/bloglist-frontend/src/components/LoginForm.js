@@ -1,5 +1,5 @@
 import { useState } from "react";
-import './LoginForm.css';
+import './loginform.css';
 import loginService from '../services/login';
 import blogService from '../services/blogs';
 
@@ -29,7 +29,7 @@ const LoginForm = ({setUser, setMessage}) => {
     }
 
     return (
-        <form onSubmit={handleLogin}>
+        <form className="login-form" onSubmit={handleLogin}>
             <h1>Log in to application</h1>
             <div>
                 username

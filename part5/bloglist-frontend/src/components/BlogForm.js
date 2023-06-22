@@ -1,5 +1,6 @@
 import { useState } from "react";
 import blogService from "../services/blogs";
+import './blogform.css';
 
 const BlogForm = ({ setBlogs, setMessage, setVisible }) => {
     const initBlogForm = { title: '', author: '', url: '' };
@@ -11,6 +12,7 @@ const BlogForm = ({ setBlogs, setMessage, setVisible }) => {
         blogService
             .create(newBlog)
             .then(returnedBlog => {
+                console.log(returnedBlog)
                 setBlogs( prev => prev.concat(returnedBlog))
                 setNewBlog(initBlogForm)
                 setMessage({ text: `a new blog titled ${returnedBlog.title} by ${returnedBlog.author} was added!`, error: false })
@@ -24,7 +26,7 @@ const BlogForm = ({ setBlogs, setMessage, setVisible }) => {
     }
 
     return (
-        <form onSubmit={addBlog}>
+        <form className="blog-form" onSubmit={addBlog}>
             <div>
                 Title 
                     <input

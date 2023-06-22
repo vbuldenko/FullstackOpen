@@ -1,0 +1,34 @@
+.blog-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+  }
+  
+  .blog-form div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .blog-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 250px;
+  }
+  
+  .blog-form button[type="submit"] {
+    padding: 10px 20px;
+    background-color: #844caf;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .blog-form button[type="submit"]:hover {
+    background-color: #5a45a0;
+  }
+    
