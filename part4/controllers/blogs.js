@@ -41,10 +41,10 @@ blogsRouter.post('/', userExtractor, async (request, response, next) => {
 
         const blog = new Blog({ ...body, user: user.id })
         const savedBlog = await blog.save()
-        await blog.populate('user', { username: 1, name: 1 }) // in order the data about user was accessed by the client
+        const populatedBlog = await Blog.findById(savedBlog._id).populate('user', { username: 1, name: 1 }) // in order the data about user was accessed by the client
         user.blogs = user.blogs.concat(savedBlog._id)
         await user.save()
-        response.status(201).json(blog)
+        response.status(201).json(populatedBlog)
     } catch(error) {
         next(error)
     }
