@@ -21,10 +21,12 @@ const Blog = (props) => {
     }
 
     const handleRemove = async () => {
-        try {
-            await blogService.remove(blog.id)
-        } catch (error) {
-            props.setMessage({ text: error.response.data.error, error: true })
+        if (window.confirm("Do you really want to delete this item?")) {
+            try {
+                await blogService.remove(blog.id)
+            } catch (error) {
+                props.setMessage({ text: error.response.data.error, error: true })
+            }
         }
     }
 
