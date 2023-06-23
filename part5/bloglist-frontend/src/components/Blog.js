@@ -20,10 +20,19 @@ const Blog = (props) => {
         }
     }
 
+    const handleRemove = async () => {
+        try {
+            await blogService.remove(blog.id)
+        } catch (error) {
+            props.setMessage({ text: error.response.data.error, error: true })
+        }
+    }
+
     const blogDetails = <>
         <p>{blog.url}</p>
         <p>likes {blog.likes} <button onClick={handleLike}>like</button></p>
         <p>{blog.user.name}</p>
+        <button onClick={handleRemove} >remove<button/>
     </>
 
     return (
