@@ -27,7 +27,7 @@ const Blogs = ({user, blogs, setBlogs, setUser, setMessage }) => {
                 /> 
             </Togglable>
     
-            { blogs.sort((a, b) => a.likes - b.likes).map( blog => <Blog key={blog.id} blog={blog} setMessage={setMessage} />) } //Implemented sorting by likes
+            { blogs.sort((a, b) => a.likes - b.likes).map( blog => <Blog key={blog.id} user={user} blog={blog} setMessage={setMessage} />) } //Implemented sorting by likes
         </div>
     ) 
 }
