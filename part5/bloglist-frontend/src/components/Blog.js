@@ -12,7 +12,7 @@ const Blog = (props) => {
 
     const handleLike = async () => {
         try {
-            const newBlog = { ...blog, likes: blog.likes + 1 }
+            const newBlog = { ...blog, user: blog.user._id, likes: blog.likes + 1 }
             const updatedBlog = await blogService.update(blog.id, newBlog)
             setBlog(updatedBlog)
         } catch (error) {
