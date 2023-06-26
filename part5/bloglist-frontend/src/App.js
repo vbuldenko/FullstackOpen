@@ -11,7 +11,7 @@ function App() {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        console.log('effect run')
+        console.log('1 effect run')
         blogService.getAll().then(blogs =>
             setBlogs( blogs )
         ) 

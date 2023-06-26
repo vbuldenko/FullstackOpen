@@ -12,7 +12,7 @@ const Blog = (props) => {
 
     const handleLike = async () => {
         try {
-            const newBlog = { ...blog, user: blog.user._id, likes: blog.likes + 1 }
+            const newBlog = { ...blog, user: blog.user.id, likes: parseInt(blog.likes) + 1 }
             const updatedBlog = await blogService.update(blog.id, newBlog)
             setBlog(updatedBlog)
         } catch (error) {
@@ -20,22 +20,24 @@ const Blog = (props) => {
         }
     }
 
-    const handleRemove = async () => {
+    const handleRemove = () => {
         if (window.confirm("Do you really want to delete this item?")) {
             try {
-                await blogService.remove(blog.id)
+                blogService.remove(blog.id)
+                props.setBlogs(prev => prev.filter( b => b.id !== blog.id))
             } catch (error) {
                 props.setMessage({ text: error.response.data.error, error: true })
             }
         }
     }
 
+    
     const blogDetails = <>
         <p>{blog.url}</p>
         <p>likes {blog.likes} <button onClick={handleLike}>like</button></p>
         <p>{blog.user.name}</p>
-        {props.user.id === blog.user.id && <button onClick={handleRemove} >remove<button/>} //Look at this later to assure it works!!!!!!
-    </>
+        { props.user.username === blog.user.username && <button onClick={handleRemove} >remove</button> } 
+    </>//Look at this later to assure it works!!!!!!
 
     return (
         <div className="blog">
