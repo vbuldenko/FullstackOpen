@@ -58,8 +58,8 @@ blogsRouter.delete('/:id', userExtractor, async (request, response, next) => {
         if (!blog) {
             return response.status(404).json({ error: 'Blog is not found' });
         }
-
-        if ( blog.user.toString() !== user.id ) {
+        // Similarly look at user.id here too!!!
+        if ( blog.user.toString() !== user.id ) { 
             return response.status(403).json({ error: 'User is not authorized to delete this blog' })
         }
 
