@@ -39,7 +39,7 @@ blogsRouter.post('/', userExtractor, async (request, response, next) => {
             body.likes = 0
         }
 
-        const blog = new Blog({ ...body, user: user.id })
+        const blog = new Blog({ ...body, user: user.id }) //Why here user.id and not user._id? Why there no error? Lookup later for better understanding!!!
         const savedBlog = await blog.save()
         const populatedBlog = await Blog.findById(savedBlog._id).populate('user', { username: 1, name: 1 }) // in order the data about user was accessed by the client
         user.blogs = user.blogs.concat(savedBlog._id)
