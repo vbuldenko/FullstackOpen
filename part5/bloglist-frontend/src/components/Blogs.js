@@ -3,7 +3,7 @@ import Blog from './Blog';
 import BlogForm from './BlogForm';
 import Togglable from './Togglable';
 
-const Blogs = ({user, blogs, setBlogs, setUser, setMessage }) => {
+const Blogs = ({ user, blogs, setBlogs, setUser, setMessage }) => {
     const [visible, setVisible] = useState(false);
 
     const handleLogout = () => {
@@ -24,14 +24,14 @@ const Blogs = ({user, blogs, setBlogs, setUser, setMessage }) => {
                     setBlogs={setBlogs}
                     setMessage={setMessage}
                     setVisible={setVisible}
-                /> 
+                />
             </Togglable>
-    
+
             { blogs
                 .sort((a, b) => a.likes - b.likes)
                 .map( blog => <Blog key={blog.id} user={user} blog={blog} setMessage={setMessage} setBlogs={setBlogs} />) }
         </div>//Implemented sorting by likes
-    ) 
+    )
 }
 
 export default Blogs

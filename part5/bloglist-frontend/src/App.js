@@ -14,7 +14,7 @@ function App() {
         console.log('1 effect run')
         blogService.getAll().then(blogs =>
             setBlogs( blogs )
-        ) 
+        )
     }, [])
 
     useEffect(() => {
@@ -23,16 +23,16 @@ function App() {
             const user = JSON.parse(loggedUserJSON)
             setUser(user)
             blogService.setToken(user.token)
-        } 
+        }
     }, [])
 
     return (
         <div className="App">
             <Notification message={message} setMessage={setMessage} />
 
-            {user === null ? 
+            {user === null ?
                 <LoginForm setUser={setUser} setMessage={setMessage} />:
-                <Blogs 
+                <Blogs
                     user={user}
                     blogs={blogs}
                     setBlogs={setBlogs}
@@ -40,7 +40,7 @@ function App() {
                     setMessage={setMessage}
                 />
             }
-            
+
         </div>
     );
 }

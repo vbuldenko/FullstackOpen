@@ -12,7 +12,7 @@ const Blog = (props) => {
 
     const handleLike = async () => {
         try {
-            const newBlog = { ...blog, user: blog.user.id, likes: parseInt(blog.likes) + 1 }
+            const newBlog = { ...blog, user: blog.user.id, likes: blog.likes + 1 }
             const updatedBlog = await blogService.update(blog.id, newBlog)
             setBlog(updatedBlog)
         } catch (error) {
@@ -31,20 +31,20 @@ const Blog = (props) => {
         }
     }
 
-    
+
     const blogDetails = <>
         <p>{blog.url}</p>
         <p>likes {blog.likes} <button onClick={handleLike}>like</button></p>
         <p>{blog.user.name}</p>
-        { props.user.username === blog.user.username && <button onClick={handleRemove} >remove</button> } 
-    </>//Look at this later to assure it works!!!!!!
+        { props.user.username === blog.user.username && <button onClick={handleRemove} >remove</button> }
+    </>//Look at this later to assure it works!!!!!
 
     return (
         <div className="blog">
-            <p>{blog.title} {blog.author} <button onClick={toggleVisibility}>{visible? 'hide': 'view'}</button></p> 
+            <p>{blog.title} {blog.author} <button onClick={toggleVisibility}>{visible? 'hide': 'view'}</button></p>
             {visible && blogDetails}
-        </div> 
+        </div>
     )
 }
-  
+
 export default Blog

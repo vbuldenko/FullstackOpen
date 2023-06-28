@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-const Togglable = ({ visible, setVisible, children, buttonLabel}) => {
+const Togglable = ({ visible, setVisible, children, buttonLabel }) => {
 
     const toggleVisibility = () => {
         setVisible(!visible)

@@ -28,14 +28,14 @@ const BlogForm = ({ setBlogs, setMessage, setVisible }) => {
     return (
         <form className="blog-form" onSubmit={addBlog}>
             <div>
-                Title 
-                    <input
-                        value={newBlog.title}
-                        name="title"
-                        onChange={handleChange}
-                    />
+                Title
+                <input
+                    value={newBlog.title}
+                    name="title"
+                    onChange={handleChange}
+                />
             </div>
-            
+
             <div>
                 Author
                 <input
@@ -44,7 +44,7 @@ const BlogForm = ({ setBlogs, setMessage, setVisible }) => {
                     onChange={handleChange}
                 />
             </div>
-            
+
             <div>
                 Url
                 <input
@@ -55,7 +55,7 @@ const BlogForm = ({ setBlogs, setMessage, setVisible }) => {
             </div>
 
             <button type="submit">save</button>
-        </form>  
+        </form>
     )
 }
 

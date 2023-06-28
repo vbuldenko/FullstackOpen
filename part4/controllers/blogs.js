@@ -39,7 +39,7 @@ blogsRouter.post('/', userExtractor, async (request, response, next) => {
             body.likes = 0
         }
 
-        const blog = new Blog({ ...body, user: user.id })
+        const blog = new Blog({ ...body, user: user._id }) //Why here user.id and not user._id? Why there no error? Lookup later for better understanding!!!
         const savedBlog = await blog.save()
         const populatedBlog = await Blog.findById(savedBlog._id).populate('user', { username: 1, name: 1 }) // in order the data about user was accessed by the client
         user.blogs = user.blogs.concat(savedBlog._id)
@@ -58,7 +58,7 @@ blogsRouter.delete('/:id', userExtractor, async (request, response, next) => {
         if (!blog) {
             return response.status(404).json({ error: 'Blog is not found' });
         }
-
+        // Similarly look at user.id here too!!!
         if ( blog.user.toString() !== user.id ) {
             return response.status(403).json({ error: 'User is not authorized to delete this blog' })
         }
@@ -77,7 +77,7 @@ blogsRouter.put('/:id', async (request, response, next) => {
     const newBlog = request.body
 
     try {
-        const updatedItem = await Blog.findByIdAndUpdate(request.params.id, newBlog, { new: true })
+        const updatedItem = await Blog.findByIdAndUpdate(request.params.id, newBlog, { new: true, runValidators: true, context: 'query' })
         const populatedBlog = await Blog.findById(updatedItem._id).populate('user', { username: 1, name: 1 })
         response.json(populatedBlog)
     } catch (error) {

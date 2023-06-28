@@ -3,9 +3,9 @@ module.exports = {
     "env": {
         "browser": true,
         "es6": true,
-        "jest/globals": true 
+        "jest/globals": true
     },
-    "extends": [ 
+    "extends": [
         "eslint:recommended",
         "plugin:react/recommended"
     ],
@@ -22,20 +22,20 @@ module.exports = {
     "rules": {
         "indent": [
             "error",
-            4  
+            4
         ],
         // "linebreak-style": [
         //     "error",
         //     "unix"
         // ],
-        "quotes": [
-            "error",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
+        // "quotes": [
+        //     "error",
+        //     "single"
+        // ],
+        // "semi": [
+        //     "error",
+        //     "always"
+        // ],
         "eqeqeq": "error",
         "no-trailing-spaces": "error",
         "object-curly-spacing": [
@@ -49,8 +49,8 @@ module.exports = {
         "react/react-in-jsx-scope": "off"
     },
     "settings": {
-      "react": {
-        "version": "detect"
-      }
+        "react": {
+            "version": "detect"
+        }
     }
 }
