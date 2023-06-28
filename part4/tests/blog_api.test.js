@@ -139,7 +139,7 @@ describe('POST requests', () => {
         const likes = response.body.map(p => p.likes)
 
         expect(response.body).toHaveLength(helper.initialPosts.length + 1)
-        expect(likes).toContain('0')
+        expect(likes).toContain(0)
     })
 
     test('if the title or url is missing from the POST request data, the backend responds with the status code 400', async () => {
@@ -185,7 +185,7 @@ describe('PUT request', () => {
     test('completes with changed likes property ', async () => {
         const blogsAtStart = await helper.blogsInDb()
         const blogToChange = blogsAtStart[0]
-        blogToChange.likes = '17'
+        blogToChange.likes = 17
 
         await api
             .put(`/api/blogs/${blogToChange.id}`)
@@ -194,7 +194,7 @@ describe('PUT request', () => {
         const blogsAtEnd = await helper.blogsInDb()
 
         const likes = blogsAtEnd.map(b => b.likes)
-        expect(likes).toContain('17')
+        expect(likes).toContain(17)
     })
 })
 
