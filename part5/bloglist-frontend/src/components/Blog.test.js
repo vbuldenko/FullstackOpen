@@ -5,8 +5,11 @@ import Blog from './Blog'
 
 test('renders content', () => {
     const blog = {
-        content: 'Component testing is done with react-testing-library',
-        important: true
+        title: 'Component testing is done with react-testing-library',
+        author: 'Sam Goodman',
+        url: 'www.somesite.com',
+        likes: 0,
+        user: { name: 'Mike', username: 'miketyson' }
     }
 
     render(<Blog blog={blog} />)
