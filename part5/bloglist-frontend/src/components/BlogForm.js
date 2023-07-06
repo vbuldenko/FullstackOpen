@@ -6,18 +6,18 @@ const BlogForm = ({ setBlogs, setMessage, setVisible }) => {
     const initBlogForm = { title: '', author: '', url: '' };
     const [newBlog, setNewBlog] = useState(initBlogForm);
 
-    const addBlog = (event) => {
+    const addBlog = async (event) => {
         event.preventDefault()
 
-        blogService
-            .create(newBlog)
-            .then(returnedBlog => {
-                console.log(returnedBlog)
-                setBlogs( prev => prev.concat(returnedBlog))
-                setNewBlog(initBlogForm)
-                setMessage({ text: `a new blog titled ${returnedBlog.title} by ${returnedBlog.author} was added!`, error: false })
-                setVisible(false)
-            }).catch(error => setMessage({ text: error.response.data.error, error: true }))
+        try {
+            const returnedBlog = await blogService.create(newBlog)
+            setBlogs( prev => prev.concat(returnedBlog))
+            setNewBlog(initBlogForm)
+            setMessage({ text: `a new blog titled ${returnedBlog.title} by ${returnedBlog.author} was added!`, error: false })
+            setVisible(false)
+        } catch (error) {
+            setMessage({ text: error.response.data.error, error: true })
+        }
     }
 
     const handleChange = (event) => {
