@@ -14,7 +14,7 @@ const Blogs = ({ user, blogs, setBlogs, setUser, setMessage }) => {
     return (
         <div>
             <h2>Blogs</h2>
-            <p>{user.username} logged in <button onClick={handleLogout}>logout</button></p>
+            <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
             <Togglable
                 visible={visible}
                 setVisible={setVisible}
