@@ -1,6 +1,12 @@
 describe('Blog app', function() {
     beforeEach(function() {
-        // cy.request('POST', 'http://localhost:3003/api/testing/reset')
+        cy.request('POST', 'http://localhost:3001/api/testing/reset')
+        const user = {
+          name: 'Matti Luukkainen',
+          username: 'mluukkai',
+          password: 'salainen'
+        }
+        cy.request('POST', 'http://localhost:3001/api/users/', user) 
         cy.visit('http://localhost:3000')
     })
 
@@ -15,17 +21,17 @@ describe('Blog app', function() {
     })
 
     it('successful login in', function() {
-        cy.get('#username').type('mlukkkkk')
-        cy.get('#password').type('salainenf')
+        cy.get('#username').type('mluukkai')
+        cy.get('#password').type('salainen')
         cy.get('#login-button').click()
 
-        cy.contains('Matti Luukkainepn logged in')
+        cy.contains('Matti Luukkainen logged in')
     })
 
     describe('when logged in', function() {
         beforeEach(function() {
-            cy.get('input:first').type('mlukkkkk')
-            cy.get('input:last').type('salainenf')
+            cy.get('input:first').type('mluukkai')
+            cy.get('input:last').type('salainen')
             cy.get('#login-button').click()
         })
 
