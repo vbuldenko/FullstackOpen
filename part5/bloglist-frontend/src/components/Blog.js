@@ -34,7 +34,7 @@ const Blog = (props) => {
 
     const blogDetails = <>
         <p>{blog.url}</p>
-        <p className="likes">likes {blog.likes} <button onClick={handleLike}>like</button></p>
+        <p className="likes">likes {blog.likes} <button className="likeButton" onClick={handleLike}>like</button></p>
         <p>{ blog.user? blog.user.name: '' }</p>
         { blog.user? (props.user.username === blog.user.username && <button onClick={handleRemove} >remove</button>): '' }
     </>
