@@ -12,8 +12,8 @@ const middleware = require('./utils/middleware');
 const logger = require('./utils/logger');
 
 if (process.env.NODE_ENV === 'test') {
-  const testingRouter = require('./controllers/testing')
-  app.use('/api/testing', testingRouter)
+    const testingRouter = require('./controllers/testing')
+    app.use('/api/testing', testingRouter)
 }
 
 
