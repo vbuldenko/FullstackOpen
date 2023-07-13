@@ -36,12 +36,12 @@ const Blog = (props) => {
         <p>{blog.url}</p>
         <p className="likes">likes {blog.likes} <button className="likeButton" onClick={handleLike}>like</button></p>
         <p>{ blog.user? blog.user.name: '' }</p>
-        { blog.user? (props.user.username === blog.user.username && <button onClick={handleRemove} >remove</button>): '' }
+        { blog.user? (props.user.username === blog.user.username && <button className="deleteButton" onClick={handleRemove} >remove</button>): '' }
     </>
 
     return (
         <div className="blog">
-            <p>{blog.title} {blog.author} <button onClick={toggleVisibility}>{visible? 'hide': 'view'}</button></p>
+            <p>{blog.title} {blog.author} <button className="detailsButton" onClick={toggleVisibility}>{visible? 'hide': 'view'}</button></p>
             {visible && blogDetails}
         </div>
     )

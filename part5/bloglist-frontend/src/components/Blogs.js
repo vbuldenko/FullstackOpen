@@ -12,7 +12,7 @@ const Blogs = ({ user, blogs, setBlogs, setUser, setMessage }) => {
     }
     // setVisible={setVisibleNewBlogForm} think about how to close blog form after adding new blog to the database
     return (
-        <div>
+        <div className='blogs'>
             <h2>Blogs</h2>
             <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
             <Togglable
@@ -28,7 +28,7 @@ const Blogs = ({ user, blogs, setBlogs, setUser, setMessage }) => {
             </Togglable>
 
             { blogs
-                .sort((a, b) => a.likes - b.likes)
+                .sort((a, b) => b.likes - a.likes)
                 .map( blog => <Blog key={blog.id} user={user} blog={blog} setMessage={setMessage} setBlogs={setBlogs} />) }
         </div>//Implemented sorting by likes
     )
