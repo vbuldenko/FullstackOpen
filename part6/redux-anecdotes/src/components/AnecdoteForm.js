@@ -6,7 +6,7 @@ const AnecdoteForm = () => {
 
     const createHandler = (e) => {
         e.preventDefault()
-        const anecdote = e.target.newAnecdote.value
+        const anecdote = { content: e.target.newAnecdote.value, votes: 0, id: 1231242134124 } // aded object after modification of the reducer action
         e.target.newAnecdote.value = ''
         dispatch(createAnecdote(anecdote))
 
