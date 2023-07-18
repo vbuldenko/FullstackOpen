@@ -14,7 +14,7 @@ import { createSlice } from '@reduxjs/toolkit'
   })
 
 export const handleNotification = (notification, time) => {
-  return async dispatch => {
+  return dispatch => {
     dispatch(setNotification(notification))
     setTimeout(() => {
       dispatch(removeNotification())
