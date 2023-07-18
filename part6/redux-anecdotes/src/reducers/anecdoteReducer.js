@@ -48,6 +48,13 @@ export const initializeAnecdotes = () => {
   }
 }
 
+export const addNewAnecdote = (anecdote) => {
+  return async dispatch => {
+    const response = await anecdoteService.create(anecdote)
+    dispatch(createAnecdote(response))
+  }
+}
+
 // // Action creators
 // export const vote = (id) => {
 //   return {
