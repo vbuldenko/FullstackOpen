@@ -14,11 +14,13 @@ import { createSlice } from '@reduxjs/toolkit'
   })
 
 export const handleNotification = (notification, time) => {
+  const seconds = time * 1000
+
   return dispatch => {
     dispatch(setNotification(notification))
     setTimeout(() => {
       dispatch(removeNotification())
-    }, time)
+    }, seconds)
   }
 }
 
