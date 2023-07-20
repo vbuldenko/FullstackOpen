@@ -1,12 +1,10 @@
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
 import { useQuery } from 'react-query'
+import { getAnecdotes } from './requests'
 
 const App = () => {
-  const result = useQuery(
-    'anecdotes',
-    () => axios.get('http://localhost:3001/anecdotes').then(res => res.data)
-  )
+  const result = useQuery( 'anecdotes',  getAnecdotes )
 
   if ( result.isLoading ) {
     return <div>loading data...</div>
