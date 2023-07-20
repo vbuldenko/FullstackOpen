@@ -1,4 +1,9 @@
+import { useContext } from "react"
+import Context from "../ContextState"
+
 const Notification = () => {
+  const context = useContext(Context)
+
   const style = {
     border: 'solid',
     padding: 10,
@@ -6,11 +11,11 @@ const Notification = () => {
     marginBottom: 5
   }
   
-  if (true) return null
+  if (context[0] === null ) return null
 
   return (
     <div style={style}>
-      
+      {context[0]}
     </div>
   )
 }

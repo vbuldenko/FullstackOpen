@@ -1,25 +1,42 @@
 import AnecdoteForm from './components/AnecdoteForm'
 import Notification from './components/Notification'
-import { useQuery } from 'react-query'
-import { getAnecdotes } from './requests'
+import { useQuery, useMutation, useQueryClient } from 'react-query'
+import { getAnecdotes, updateAnecdote } from './requests'
+import { useContext } from 'react'
+import Context from './ContextState'
 
 const App = () => {
-  const result = useQuery( 'anecdotes',  getAnecdotes, { retry: 1 }) //requests 1 more time before states that the request is not successful
+  const context = useContext(Context)
+  const queryClient = useQueryClient()
+  const updateAnecdoteMutation = useMutation( updateAnecdote, {
+    // onSuccess: (updatedAnecdote) => {
+    //   const anecdotes = queryClient.getQueryData('anecdotes')
+    //   queryClient.setQueryData('anecdotes', anecdotes.map( anecdote => anecdote.id === updatedAnecdote.id? updatedAnecdote: anecdote ))
+    // }
+    onSuccess: () => {
+        queryClient.invalidateQueries('anecdotes')
+    }
+  })
+  
+  //additional requests forbidden when first was unsuccessful - { retry: false }
+  const { isLoading, isError, error, data } = useQuery( 'anecdotes',  getAnecdotes, { retry: false })
 
-  if ( result.isLoading ) {
+  if ( isLoading ) {
     return <div>loading data...</div>
   }
-
-  if ( result.isError ) {
+  if ( isError ) {
     return <div>
-      <b>Servise is unavailable due to server error</b>
-      Error: {error.message}
+      <b>Service is unavailable due to server error</b>
+      <p>Error: { error.message }</p>
     </div>
   }
-  const anecdotes = result.data
+
+  const anecdotes = data
   
   const handleVote = (anecdote) => {
-    console.log('vote')
+    const updatedAnecdote = { ...anecdote, votes: anecdote.votes + 1 }
+    context[2]({content:updatedAnecdote.content, action: 'voted'})
+    updateAnecdoteMutation.mutate(updatedAnecdote)
   }
 
   return (
