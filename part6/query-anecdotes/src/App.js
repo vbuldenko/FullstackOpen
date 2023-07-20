@@ -4,10 +4,17 @@ import { useQuery } from 'react-query'
 import { getAnecdotes } from './requests'
 
 const App = () => {
-  const result = useQuery( 'anecdotes',  getAnecdotes )
+  const result = useQuery( 'anecdotes',  getAnecdotes, { retry: 1 }) //requests 1 more time before states that the request is not successful
 
   if ( result.isLoading ) {
     return <div>loading data...</div>
+  }
+
+  if ( result.isError ) {
+    return <div>
+      <b>Servise is unavailable due to server error</b>
+      Error: {error.message}
+    </div>
   }
   const anecdotes = result.data
   
