@@ -35,8 +35,8 @@ const App = () => {
   
   const handleVote = (anecdote) => {
     const updatedAnecdote = { ...anecdote, votes: anecdote.votes + 1 }
-    context[2]({content:updatedAnecdote.content, action: 'voted'})
     updateAnecdoteMutation.mutate(updatedAnecdote)
+    context[2](`anecdote '${anecdote.content}' voted`)
   }
 
   return (
