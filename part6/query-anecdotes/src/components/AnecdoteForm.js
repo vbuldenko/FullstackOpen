@@ -15,6 +15,9 @@ const AnecdoteForm = () => {
          const anecdotes = queryClient.getQueryData('anecdotes')
          queryClient.setQueryData('anecdotes', anecdotes.concat(newAnecdote))
       }
+      onError: (error) => {
+         context[2]('Too short anecdote, must have length 5 or more')
+      }
     }) 
   
   const onCreate = (event) => {
@@ -22,7 +25,7 @@ const AnecdoteForm = () => {
     const content = event.target.anecdote.value
     event.target.anecdote.value = ''
     newAnecdoteMutation.mutate({ content, votes: 0 })
-    context[2]({content, action: 'created'})
+    context[2](`anecdote '${content}' created`)
 }
 
   return (
