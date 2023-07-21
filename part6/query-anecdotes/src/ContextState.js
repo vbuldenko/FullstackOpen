@@ -16,8 +16,8 @@ const Context = createContext()
 export const ContextProvider = (props) => {
   const [notification, notificationDispatch] = useReducer(notificationReducer, null)
 
-  const notificationHandler = ({content, action}) => {
-    notificationDispatch({type: 'NOTIFICATION', payload:`anecdote '${content}' ${action}`})
+  const notificationHandler = (content) => {
+    notificationDispatch({type: 'NOTIFICATION', payload: content})
     setTimeout(() => notificationDispatch({type: "OFF"}), 5000)
   }
 
