@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useField, useResource } from './hooks'
 
 const App = () => {
@@ -18,11 +17,6 @@ const App = () => {
     event.preventDefault()
     personService.create({ name: name.value, number: number.value})
   }
-
-  useEffect(() => {
-    noteService.getAll()
-    personService.getAll()
-  }, [])
 
   return (
     <div>
