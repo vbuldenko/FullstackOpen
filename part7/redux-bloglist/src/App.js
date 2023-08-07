@@ -6,6 +6,7 @@ import Blogs from './components/Blogs';
 import { initializeBlogs } from './reducers/blogReducer';
 import { loadLoggedInUser } from './reducers/userReducer';
 import { useDispatch, useSelector } from 'react-redux';
+import { Routes, Route } from 'react-router-dom';
 
 function App() {
     const dispatch = useDispatch();
@@ -20,7 +21,16 @@ function App() {
     return (
         <div className="App">
             <Notification />
-            {!user ? <LoginForm /> : <Blogs user={user} blogs={blogs} />}
+            {!user ? (
+                <LoginForm />
+            ) : (
+                <Routes>
+                    <Route
+                        path="/"
+                        element={<Blogs user={user} blogs={blogs} />}
+                    />
+                </Routes>
+            )}
         </div>
     );
 }
