@@ -16,11 +16,6 @@ function App() {
     }
 
     const blogs = result.data;
-    console.log(blogs);
-
-    // useEffect(() => {
-    //     dispatch(loadLoggedInUser());
-    // }, []);
 
     return (
         <div className="App">
