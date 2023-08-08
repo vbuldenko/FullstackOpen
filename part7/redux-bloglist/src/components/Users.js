@@ -2,7 +2,7 @@ import './users.css';
 import { Link } from 'react-router-dom';
 
 const Users = ({ users }) => {
-    // const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes); //Implemented sorting by likes
+    // const sortedUsers = [...users].sort((a, b) => b.blogs.length - a.blogs.length); //Implemented sorting by number of blogs
 
     return (
         <div className="users">
