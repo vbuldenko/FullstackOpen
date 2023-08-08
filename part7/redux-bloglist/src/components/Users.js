@@ -1,4 +1,5 @@
 import './users.css';
+import { Link } from 'react-router-dom';
 
 const Users = ({ users }) => {
     // const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes); //Implemented sorting by likes
@@ -11,7 +12,9 @@ const Users = ({ users }) => {
             <div className="user-list">
                 {users.map((user) => (
                     <div className="user-item" key={user.id}>
-                        <p className="user-name">{user.name}</p>
+                        <Link className="user-name" to={`/users/${user.id}`}>
+                            {user.name}
+                        </Link>
                         <p className="blogs-count">{user.blogs.length}</p>
                     </div>
                 ))}
