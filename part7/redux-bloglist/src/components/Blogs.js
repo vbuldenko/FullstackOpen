@@ -1,9 +1,13 @@
-import Blog from './Blog';
+import { Link } from 'react-router-dom';
 import BlogForm from './BlogForm';
 import Togglable from './Togglable';
 
-const Blogs = ({ user, blogs }) => {
+const Blogs = ({ blogs }) => {
     const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes); //Implemented sorting by likes
+
+    const padding = {
+        padding: 5,
+    };
 
     return (
         <div className="blogs">
@@ -12,7 +16,11 @@ const Blogs = ({ user, blogs }) => {
             </Togglable>
 
             {sortedBlogs.map((blog) => (
-                <Blog key={blog.id} user={user} blog={blog} />
+                <div key={blog.id}>
+                    <Link style={padding} to={`/blogs/${blog.id}`}>
+                        {blog.title}
+                    </Link>
+                </div>
             ))}
         </div>
     );

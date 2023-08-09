@@ -1,11 +1,13 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import './loginform.css';
 
-import { useDispatch } from 'react-redux';
 import { notifyWith } from '../reducers/notificationReducer';
 import { signUserIn } from '../reducers/userReducer';
 
 const LoginForm = () => {
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
 
@@ -17,6 +19,7 @@ const LoginForm = () => {
             dispatch(signUserIn({ username, password }));
             setUsername('');
             setPassword('');
+            navigate('/');
         } catch (exception) {
             dispatch(notifyWith({ text: 'Wrong credentials', error: true }));
         }

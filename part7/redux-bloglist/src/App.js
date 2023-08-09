@@ -6,6 +6,7 @@ import { Routes, Route, useMatch } from 'react-router-dom';
 import Notification from './components/Notification';
 import LoginForm from './components/LoginForm';
 import Blogs from './components/Blogs';
+import Blog from './components/Blog';
 import Menu from './components/Menu';
 import Users from './components/Users';
 import User from './components/User';
@@ -19,12 +20,16 @@ function App() {
     const user = useSelector(({ user }) => user);
     const blogs = useSelector(({ blogs }) => blogs);
     const users = useSelector(({ users }) => users);
-    const match = useMatch('/users/:id');
-    const matchedUser = match
-        ? users.find((user) => user.id === match.params.id) // if user.id is a number format matched id to number as well
-        : null;
 
-    console.log(matchedUser);
+    const matchUser = useMatch('/users/:id');
+    const matchBlog = useMatch('/blogs/:id');
+
+    const selectedUser = matchUser
+        ? users.find((user) => user.id === matchUser.params.id) // if user.id is a number format matched id to number as well
+        : null;
+    const selectedBlog = matchBlog
+        ? blogs.find((blog) => blog.id === matchBlog.params.id) // if blog.id is a number format matched id to number as well
+        : null;
 
     useEffect(() => {
         dispatch(loadLoggedInUser());
@@ -40,15 +45,17 @@ function App() {
                 <LoginForm />
             ) : (
                 <Routes>
+                    <Route path="/" element={<Blogs blogs={blogs} />} />
                     <Route
-                        path="/"
-                        element={<Blogs user={user} blogs={blogs} />}
+                        path="/blogs/:id"
+                        element={<Blog user={user} blog={selectedBlog} />}
                     />
                     <Route path="/users" element={<Users users={users} />} />
                     <Route
                         path="/users/:id"
-                        element={<User user={matchedUser} />}
+                        element={<User user={selectedUser} />}
                     />
+                    <Route path="/login" element={<LoginForm />} />
                 </Routes>
             )}
         </div>

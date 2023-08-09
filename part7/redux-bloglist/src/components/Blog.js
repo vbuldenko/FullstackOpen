@@ -1,12 +1,9 @@
-import { useState } from 'react';
 import './blog.css';
-
 import { useDispatch } from 'react-redux';
 import { updateBlog, deleteBlog } from '../reducers/blogReducer';
 import { notifyWith } from '../reducers/notificationReducer';
 
 const Blog = ({ blog, user }) => {
-    const [visible, setVisible] = useState(false);
     const dispatch = useDispatch();
 
     const handleLike = async () => {
@@ -33,18 +30,21 @@ const Blog = ({ blog, user }) => {
         }
     };
 
-    const blogDetails = (
-        <>
+    return (
+        <div className="blog">
+            <h2>
+                {blog.title} - {blog.author}
+            </h2>
             <p>{blog.url}</p>
             <p className="likes">
-                likes {blog.likes}{' '}
+                {blog.likes} likes{' '}
                 <button className="likeButton" onClick={handleLike}>
                     like
                 </button>
             </p>
             {blog.user && (
                 <>
-                    <p>{blog.user.name}</p>
+                    <p>added by {blog.user.name}</p>
                     {blog.user.username === user.username && (
                         <button className="deleteButton" onClick={handleRemove}>
                             delete
@@ -52,21 +52,6 @@ const Blog = ({ blog, user }) => {
                     )}
                 </>
             )}
-        </>
-    );
-
-    return (
-        <div className="blog">
-            <p>
-                {blog.title} {blog.author}{' '}
-                <button
-                    className="detailsButton"
-                    onClick={() => setVisible(!visible)}
-                >
-                    {visible ? 'hide' : 'view'}
-                </button>
-            </p>
-            {visible && blogDetails}
         </div>
     );
 };
