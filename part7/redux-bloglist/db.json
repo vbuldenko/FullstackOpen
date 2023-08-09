@@ -6,6 +6,7 @@
             "author": "Michael Chan",
             "url": "https://reactpatterns.com/",
             "likes": 19,
+            "comments": ["awesome article"],
             "user": {
                 "username": "mlukkkkk",
                 "name": "Matti Luukkainepn",
@@ -18,6 +19,7 @@
             "author": "Edsger W. Dijkstra",
             "url": "http://www.u.arizona.edu/~rubinson/copyright_violations/Go_To_Considered_Harmful.html",
             "likes": 8,
+            "comments": [],
             "user": {
                 "username": "mlukkkkk",
                 "name": "Matti Luukkainepn",

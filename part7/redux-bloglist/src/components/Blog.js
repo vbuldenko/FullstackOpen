@@ -5,6 +5,9 @@ import { notifyWith } from '../reducers/notificationReducer';
 
 const Blog = ({ blog, user }) => {
     const dispatch = useDispatch();
+    if (!blog) {
+        return null;
+    }
 
     const handleLike = async () => {
         try {
@@ -52,6 +55,13 @@ const Blog = ({ blog, user }) => {
                     )}
                 </>
             )}
+
+            <h3>comments</h3>
+            <ul>
+                {blog.comments.map((comment) => (
+                    <li key={comment}>{comment}</li>
+                ))}
+            </ul>
         </div>
     );
 };

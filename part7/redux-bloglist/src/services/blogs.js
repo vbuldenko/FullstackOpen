@@ -20,6 +20,12 @@ const create = async (newObject) => {
     return response.data;
 };
 
+const addcomment = async (id, newComment) => {
+    // const response = await axios.post(baseUrl, newObject, config)
+    const response = await axios.post(`${baseUrl}/${id}/comments`, newComment);
+    return response.data;
+};
+
 const update = async (id, newBlog) => {
     const response = await axios.put(`${baseUrl}/${id}`, newBlog);
     return response.data;
@@ -31,4 +37,4 @@ const remove = (id) => {
 };
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, create, update, remove };
+export default { getAll, create, addcomment, update, remove };
