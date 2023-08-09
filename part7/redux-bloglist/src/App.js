@@ -41,23 +41,19 @@ function App() {
         <div className="App">
             <Notification />
             <Menu user={user} />
-            {!user ? (
-                <LoginForm />
-            ) : (
-                <Routes>
-                    <Route path="/" element={<Blogs blogs={blogs} />} />
-                    <Route
-                        path="/blogs/:id"
-                        element={<Blog user={user} blog={selectedBlog} />}
-                    />
-                    <Route path="/users" element={<Users users={users} />} />
-                    <Route
-                        path="/users/:id"
-                        element={<User user={selectedUser} />}
-                    />
-                    <Route path="/login" element={<LoginForm />} />
-                </Routes>
-            )}
+            <Routes>
+                <Route path="/" element={<Blogs blogs={blogs} />} />
+                <Route
+                    path="/blogs/:id"
+                    element={<Blog user={user} blog={selectedBlog} />}
+                />
+                <Route path="/users" element={<Users users={users} />} />
+                <Route
+                    path="/users/:id"
+                    element={<User user={selectedUser} />}
+                />
+                <Route path="/login" element={<LoginForm />} />
+            </Routes>
         </div>
     );
 }

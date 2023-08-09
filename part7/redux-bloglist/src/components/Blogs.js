@@ -6,7 +6,7 @@ const Blogs = ({ blogs }) => {
     const sortedBlogs = [...blogs].sort((a, b) => b.likes - a.likes); //Implemented sorting by likes
 
     const padding = {
-        padding: 5,
+        padding: 0,
     };
 
     return (
