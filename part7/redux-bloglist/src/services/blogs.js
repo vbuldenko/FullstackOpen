@@ -19,10 +19,12 @@ const create = async (newObject) => {
     const response = await axios.post(baseUrl, newObject);
     return response.data;
 };
-
-const addcomment = async (id, newComment) => {
-    // const response = await axios.post(baseUrl, newObject, config)
-    const response = await axios.post(`${baseUrl}/${id}/comments`, newComment);
+const addcomment = async (id, comment) => {
+    const response = await axios.post(`${baseUrl}/${id}/comments/`, {
+        comment,
+    });
+    // sends object to appropriately handle deeply nested request to json server
+    console.log(response.data);
     return response.data;
 };
 

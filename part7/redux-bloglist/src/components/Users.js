@@ -6,8 +6,10 @@ const Users = ({ users }) => {
 
     return (
         <div className="users">
-            <h2>Users</h2>
-            <h3 className="blogs-created">blogs created</h3>
+            <div className="users-titles">
+                <h2>Users</h2>
+                <h3>blogs created</h3>
+            </div>
 
             <div className="user-list">
                 {users.map((user) => (

@@ -1,0 +1,28 @@
+.blogs {
+    width: 100%;
+    padding: 20px;
+    background-color: #f6f6f6;
+    border-radius: 1em;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.blog-item {
+    margin: 10px 0;
+    padding: 10px;
+    background-color: white;
+    border: 1px solid #d1d1d1;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.blog-link {
+    text-decoration: none;
+    color: #0070c9;
+    font-size: 18px;
+    transition: color 0.2s;
+}
+
+.blog-link:hover {
+    color: #0055a0;
+}

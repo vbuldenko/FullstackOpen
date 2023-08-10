@@ -1,0 +1,3 @@
+{
+    "/blogs/:id/comments/:commentsId": "/comments/:commentsId"
+}

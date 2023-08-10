@@ -1,32 +1,40 @@
-.users {
-    display: grid;
-    grid-template-columns: 300px; /* Single column */
-    gap: 10px;
+.users,
+.users-titles,
+.user-list,
+.user-item {
+    display: flex;
+    box-sizing: border-box;
 }
 
-.blogs-created {
-    text-align: right;
-    margin-top: 0;
-}
-
+.users,
 .user-list {
-    display: grid;
-    gap: 10px;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.users,
+.user-item {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.users-titles,
+.user-item {
+    justify-content: space-between;
+    align-items: center;
+    padding: 1em;
+}
+
+.users-titles *,
+.blogs-count {
+    margin: 0;
+}
+
+.users {
+    width: 100%;
+    border-radius: 1em;
+    padding: 2em;
 }
 
 .user-item {
-    display: grid;
-    grid-template-columns: auto auto; /* Two columns: for user name and "blogs count" */
-    gap: 5px;
-    border: 1px solid #ccc;
-    padding: 10px;
-}
-
-.user-name {
-    align-self: center;
-}
-
-.blogs-count {
-    align-self: center;
-    text-align: right;
+    border-radius: 0.5em;
 }

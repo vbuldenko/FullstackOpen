@@ -5,7 +5,7 @@
             "title": "React patterns",
             "author": "Michael Chan",
             "url": "https://reactpatterns.com/",
-            "likes": 19,
+            "likes": 22,
             "comments": ["awesome article"],
             "user": {
                 "username": "mlukkkkk",
@@ -54,6 +54,13 @@
             "username": "mike",
             "name": "Mike Tyson",
             "blogs": []
+        }
+    ],
+    "comments": [
+        {
+            "comment": "json server doesnot support deeply nested requests ",
+            "blogId": "64aff3f43eab8793734da3dd",
+            "id": 1
         }
     ]
 }

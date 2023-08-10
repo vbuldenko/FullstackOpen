@@ -1,4 +1,5 @@
 import { useState, cloneElement } from 'react';
+import './togglable.css';
 
 const Togglable = ({ children }) => {
     const [visible, setVisible] = useState(false);
@@ -14,7 +15,9 @@ const Togglable = ({ children }) => {
                 {/* Pass toggleVisibility as a prop to BlogForm */}
                 {cloneElement(children, { toggleVisibility })}
             </div>
-            <button onClick={toggleVisibility}>{buttonLabel}</button>
+            <button className="togglable-button" onClick={toggleVisibility}>
+                {buttonLabel}
+            </button>
         </div>
     );
 };

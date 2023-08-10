@@ -1,9 +1,11 @@
 import './blog.css';
 import { useDispatch } from 'react-redux';
-import { updateBlog, deleteBlog } from '../reducers/blogReducer';
+import { updateBlog, deleteBlog, addComment } from '../reducers/blogReducer';
 import { notifyWith } from '../reducers/notificationReducer';
+import { useField } from '../hooks';
 
 const Blog = ({ blog, user }) => {
+    const [comment, resetComment] = useField('text');
     const dispatch = useDispatch();
     if (!blog) {
         return null;
@@ -33,6 +35,12 @@ const Blog = ({ blog, user }) => {
         }
     };
 
+    const handleComment = (e) => {
+        e.preventDefault();
+        dispatch(addComment(blog.id, comment.value));
+        resetComment();
+    };
+
     return (
         <div className="blog">
             <h2>
@@ -40,16 +48,19 @@ const Blog = ({ blog, user }) => {
             </h2>
             <p>{blog.url}</p>
             <p className="likes">
-                {blog.likes} likes{' '}
-                <button className="likeButton" onClick={handleLike}>
+                {blog.likes} likes
+                <button className="like-button" onClick={handleLike}>
                     like
                 </button>
             </p>
             {blog.user && (
                 <>
                     <p>added by {blog.user.name}</p>
-                    {blog.user.username === user.username && (
-                        <button className="deleteButton" onClick={handleRemove}>
+                    {user && blog.user.username === user.username && (
+                        <button
+                            className="delete-button"
+                            onClick={handleRemove}
+                        >
                             delete
                         </button>
                     )}
@@ -57,6 +68,10 @@ const Blog = ({ blog, user }) => {
             )}
 
             <h3>comments</h3>
+            <form onSubmit={handleComment}>
+                <input {...comment} />
+                <button>add comment</button>
+            </form>
             <ul>
                 {blog.comments.map((comment) => (
                     <li key={comment}>{comment}</li>
